@@ -4,12 +4,23 @@
       .logo
         img(src="../assets/infinity.png" height="30px" style="float:left;margin-top: -5px;margin-right: 10px;")
         |Infinite File System
-    
+    br
+    .main__container
+      div.entry__container
+        .entry__header /home/joe/10   
+        FileEntry
+        FileEntry
+        FileEntry
 </template>
 
 <script>
+  import FileEntry from './FileEntry.vue'
+  
   export default {
     name: 'Home',
+    components: {
+      FileEntry
+    },
     data () {
       return {
         msg: 'Welcome to Your Vue.js App'
@@ -27,6 +38,7 @@
     max-width: 800px
     width: 80%
     margin: auto
+    margin-bottom: 10px
     .logo
       float: left
       font-size: 20px
@@ -43,4 +55,19 @@
       color: rgba(140, 20, 252, 1)
       background-color: rgba(140, 20, 252, 0.1)
       line-height: 20px
+
+  .main__container
+    width: 80%
+    max-width: 800px
+    height: 100%
+    margin: auto
+    margin-top: 50px
+  .entry__container
+    width: 66%
+    float: left
+    .entry__header
+      font-family: Courier
+      font-size: 12px
+      float: left
+
 </style>
