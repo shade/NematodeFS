@@ -1,6 +1,5 @@
 let bsv = require('bsv')
 
-
 class Block {
     constructor (keys, data) {
         this.keys = keys

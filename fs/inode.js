@@ -6,7 +6,7 @@ const SINGLE_INPUT_SIZE = 65 + 71
 const SINGLE_OUTPUT_SIZE = 24 + 9
 
 // The amount of data in each opreturn
-const NULLDATA_SIZE = 65536
+const CHUNK_SIZE = 65536
 
 class INode {
     constructor () {
@@ -32,8 +32,10 @@ class INode {
         }
 
         let num_chunks = file.length / NULLDATA_SIZE
-        for (var i = 0; i < num_chunks; i++) {
-            this.addBlock()
+
+        for (var i = 0; i <= num_chunks; i++) {
+            chunk = file.slice(CHUNK_SIZE*i, CHUNK_SIZE*(i + 1))
+            this.addBlock(chunk)
         }
     }
 
