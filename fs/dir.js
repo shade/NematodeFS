@@ -1,9 +1,14 @@
 
-const DYNAMIC_FOLDER_BIT = 0b00000001
+const IFS_FT_UNKNOWN = 0
+const IFS_FT_REG_FILE = 1 << 1
+const IFS_FT_DIR = 1 << 2
+const IFS_FT_DYNLINK = 1 << 3
+const IFS_FT_STATLINK = 1 << 4
+
 
 class Folder {
     constructor (dynamic, ptr, name) {
-        this.mode = (dynamic ? 1 : 0)
+        this.filetype = (dynamic ? 1 : 0)
         this.ptr = ptr
         this.name = name
     }
@@ -11,7 +16,7 @@ class Folder {
     serialize () {
         folderSize = 2 + 1
 
-        if (this.mode & DYNAMIC_FOLDER_BIT) {
+        if (this.filetype & IFS_FT_DIR) {
             folderSize += 20
         } else {
             folderSize += 32
@@ -27,11 +32,11 @@ class Folder {
     static deserialize (buffer) {
         // Add in size
         this.size = buffer[0] + (buffer[1] << 8)
-        this.mode = buffer[2]
+        this.filetype = buffer[2]
         
         // Check if it's dynamic or static 
         let cursor = 3
-        if (mode & DYNAMIC_FOLDER_BIT) {
+        if (this.filetype & IFS_FT_DIR) {
             cursor += 20
             this.ptr = buffer.slice(3, 3 + 20)
         } else {
