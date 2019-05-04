@@ -1,10 +1,9 @@
+let bsv = require('bsv')
 
 const IFS_FT_UNKNOWN = 0
-const IFS_FT_REG_FILE = 1 << 1
-const IFS_FT_DIR = 1 << 2
+const IFS_FT_DIR = 1 << 1
+const IFS_FT_REGFILE = 1 << 2
 const IFS_FT_DYNLINK = 1 << 3
-const IFS_FT_STATLINK = 1 << 4
-
 
 class Folder {
     constructor (dynamic, ptr, name) {

@@ -1,5 +1,11 @@
 let bsv = require('bsv')
 
+// These are the different filetypes
+const IFS_FT_UNKNOWN = 0
+const IFS_FT_DIR = 1 << 1
+const IFS_FT_REGFILE = 1 << 2
+const IFS_FT_DYNLINK = 1 << 3
+
 // Each INode is max N bytes, 1kb long
 const INODE_MAX_SIZE = 1024
 const SINGLE_INPUT_SIZE = 65 + 71
