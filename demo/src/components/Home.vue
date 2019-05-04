@@ -5,12 +5,15 @@
         img(src="../assets/infinity.png" height="30px" style="float:left;margin-top: -5px;margin-right: 10px;")
         |Infinite File System
     br
-    .main__container
+    div.main__container
       div.entry__container
-        .entry__header /home/joe/10   
-        FileEntry
-        FileEntry
-        FileEntry
+        div.entry__header
+          span.current_location /home/joe/10
+          span.up_one
+        FileEntry(name="hi.txt")
+        FileEntry(name="cool.png")
+        FileEntry(name="lulz.exe")
+      div.
 </template>
 
 <script>
