@@ -4,6 +4,9 @@
 </template>
 
 <script>
+  import 'coinify-psp-lib'
+
+  console.log()
   export default {
     name: 'HelloWorld',
     data () {
