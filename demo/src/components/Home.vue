@@ -13,6 +13,7 @@
         FileEntry(name="hi.txt")
         FileEntry(name="cool.png")
         FileEntry(name="lulz.exe")
+        FileEntry(name=".." type="folder")
       div.
 </template>
 
