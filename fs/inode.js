@@ -1,3 +1,4 @@
+let bsv = require('bsv')
 
 // Each INode is max N bytes, 1kb long
 const INODE_MAX_SIZE = 1024
@@ -13,13 +14,15 @@ class INode {
         this.MAX_BLOCKS = ~~((INODE_MAX_SIZE - SINGLE_INPUT_SIZE) / SINGLE_OUTPUT_SIZE)
         this.blocks = []
         this.indblock = []
-
+        this.key = 
         this.open = true
     }
 
     addBlock (block) {
         if (this.blocks.length === this.MAX_BLOCKS) {
             this.indblock.push(block)
+        } else {
+            this.blocks.push(block)
         }
     }
 
@@ -32,5 +35,10 @@ class INode {
         for (var i = 0; i < num_chunks; i++) {
             this.addBlock()
         }
+    }
+
+    publish () {
+        // First this inode must be published.
+        // Publish all the blocks
     }
 }
