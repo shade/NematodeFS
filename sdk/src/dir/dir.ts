@@ -2,6 +2,7 @@ import RAM from '../ram'
 import { INode, IDirINode, IDirEntry, BSVKeyPair, NETWORK } from "../types";
 import bsv from 'bsv'
 import Reader from '../reader'
+import DirEntry from './direntry';
 
 export default class DirINode extends Reader implements IDirINode {
     key: BSVKeyPair
@@ -82,8 +83,11 @@ export default class DirINode extends Reader implements IDirINode {
 
     private parseEntries(data: Uint8Array) {
         for (var i = 0; i < this.record_count; i++) {
-            // TODO: parse Folder entry,
-            // Push folder entry
+            let len = this.readInt(data, 2)
+            let arr = data.slice(0, len)
+
+            this.dirs.push(new DirEntry(arr))
+            data = data.slice(len)
         }
     }
 
