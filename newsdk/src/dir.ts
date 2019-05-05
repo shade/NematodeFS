@@ -29,9 +29,19 @@ export class Dir {
         this.iNode.bitcom_id = data.slice(2, 22)
         this.iNode.size = 0
 
-        // Update the inode size
+        // Get the inode size
         for (var i = 0; i < 8; i++) {
             this.iNode.size += data[23 + i] << (8 * i)
+        }
+
+        // Update the child_count
+        for (var i = 0; i < 4; i++) {
+            this.iNode.child_count += data[23 + 8] << (8 * i)
+        }
+
+        // Update the record count
+        for (var i = 0; i < 4; i++) {
+            this.iNode.record_count += data[23 + 8 + 4] << (8 * i)
         }
 
     }
