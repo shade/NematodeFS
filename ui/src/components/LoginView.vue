@@ -2,8 +2,8 @@
     div
         Navbar(home="true")
         .btn__container
-            .btn__wrap Upload HardID
-            .btn__wrap(@click="download(newKey())") Create New HardID      
+            input.btn__wrap(type="file" value="Upload Key")
+            .btn__wrap(@click="download(newKey())") Create New Key      
         .updates__container
             .updates__wrap
                 | Recently Added files
@@ -52,6 +52,10 @@
         cursor: pointer
 
         .btn__wrap
+            width: 100px
+            text-align: center
+            border: 0
+            cursor: pointer
             font-family: Inconsolata
             font-size: 14px
             display: inline-block

@@ -16,6 +16,8 @@ export default {
 </script>
 <style lang="sass">
     .container
+        cursor: pointer
+        font-family: Inconsolata
         padding: 10px
         box-sizing: border-box
         width: 100%
