@@ -27,8 +27,11 @@
             td.info__header Creation Time
             td.info__data Block 3405 (2 mins ago)
           tr
-            td.info__header Encrypted?
-            td.info__data No
+            td.info__header Encryption
+            td.info__data None
+          tr
+            td.info__header Cost to remove
+            td.info__data 3.5 actions
         div.choice(style="font-family: Inconsolata; padding-top: 20px") DOWNLOAD | PREVIEW
 
 </template>

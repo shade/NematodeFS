@@ -1,5 +1,5 @@
 
-interface Dir {
+export interface Dir {
     // 2 byte number, the size of this entire directory entry
     record_size: number,
 
@@ -18,7 +18,7 @@ interface Dir {
     name: Uint8Array[256]
 }
 
-interface INode {
+export interface INode {
     // Tells us if this is a directory, a normal file
     mode: number,
     // A 20 byte pubkeyhash related to the type 
@@ -33,7 +33,15 @@ interface INode {
     record_count: number,
 }
 
-interface DirINode extends INode {
+export interface DirINode extends INode {
     dirs: Dir[]
 }
 
+export interface BSVKeyPair {
+    privateKey: object
+    hdPublicKey: {
+        publicKey: object
+    }
+
+    derive(child: number): BSVKeyPair
+}

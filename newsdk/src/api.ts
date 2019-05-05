@@ -1,28 +1,21 @@
 
 import bsv from 'bsv'
+import { BSVKeyPair } from "./types";
 
 
 const BITCOM_ADDR = '1N2QZZrCs5HKS2SiPLMxyVtywSUfDKChmp'
 const BITCOM_HASH = 'e69eb9be65f3120cf2150edf4c0ff4ecdfe67fe1'
 
-interface BSVKeyPair {
-    privateKey: object
-    hdPublicKey: {
-        publicKey: object
-    }
-
-    derive(child: number): BSVKeyPair
-}
-
-
-class FileSystem {
+class Nematode {
     master: BSVKeyPair
     freeBalance: number
 
     constructor (key: BSVKeyPair) {
         if (!key) {
             this.master = this.genKey()
-            this.serveKey(this.master)
+            this.balance = 0
+
+            return
         }
 
         this.master = key
