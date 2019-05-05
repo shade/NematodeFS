@@ -13,11 +13,21 @@ class FileSystem {
         this.balance = this._getBalance(this.master)
     }
 
+//    mkdirByPath (path, name) {
+//        let parent = _deriveKeyFromPath(path)
+//        return mkdir(parent, name)
+//    } 
+
     mkdir (parent, name) {
-        parentKey = _findDirKey(parent)
-        newDirKey = _deriveNewKey(parentKey)
+        newDirKey = _deriveNewKey(parent)
 
         // TODO: Add update parent index function
+    }
+
+    fetchDir (dirkey) {
+        // TODO: BitDB Query to fetch the actual directory
+        // The actual directory is the last index created by dirkey
+        address = new bsv.Address(dirkey.hdPublicKey, LIVENET)
     }
 
     genKey () {
