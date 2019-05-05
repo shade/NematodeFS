@@ -33,6 +33,8 @@ export interface INode {
     record_count: number,
 }
 
+export const NETWORK = 'testnet'
+
 export interface DirINode extends INode {
     dirs: Dir[]
 }

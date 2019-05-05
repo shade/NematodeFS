@@ -1,5 +1,6 @@
 import RAM from './ram'
-import { INode, DirINode, BSVKeyPair } from "./types";
+import { INode, DirINode, BSVKeyPair, NETWORK } from "./types";
+import bsv from 'bsv'
 
 export class Dir {
     key: BSVKeyPair
@@ -18,7 +19,9 @@ export class Dir {
      * Re-Fetches and parses the inode and data associated with this dir 
      */
     refresh () {
-        addr = this.key.getAddress()
-        RAM.getLastTxData(addr)
+        let pubkey = this.key.hdPublicKey.publicKey
+        let addr = new bsv.Address(pubkey, NETWORK, 'pubkey')
+        
+        let data = RAM.getLastTxData(addr)
     }
 }
