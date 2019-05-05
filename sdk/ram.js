@@ -11,6 +11,10 @@ const QUERIES = {
             },
             "limit": 10
         }
+    }),
+
+    getLastNode: pubkeyhash  => ({
+
     })
 }
 
