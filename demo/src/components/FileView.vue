@@ -25,7 +25,15 @@
     components: {
       FileEntry
     },
+    mounted () {
+      if (!localStorage.getItem('private')) {
+        this.$router.push({path: '/'})
+      }
+    },
     data () {
+      // TODO: Fetch the folders local to this
+      // TODO: Show the folders
+
       return {
         msg: 'Welcome to Your Vue.js App'
       }
@@ -34,8 +42,10 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="sass">
+<style lang="sass">
   @import url('https://fonts.googleapis.com/css?family=Inconsolata')
+  body
+    background-color: #FFF
 
   .header
     font-family: Inconsolata

@@ -16,7 +16,11 @@
 
     export default {
         name: 'Login',
-
+        mounted () {
+            if (localStorage.getItem('private')) {
+                this.$router.push({path: '/home'})
+            }
+        },
         methods: {
             download (data) {
                 let str = JSON.stringify(data)
@@ -45,7 +49,7 @@
         max-width: 800px
         width: 80%
         margin: auto
-        margin-bottom: 10px
+        margin-top: 50px
         color: #FFF
         .logo
             float: left
