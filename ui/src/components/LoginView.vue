@@ -1,21 +1,21 @@
 <template lang="jade">
     div
-        .header
-            .logo
-                img(src="../assets/infinitywhite.png" height="30px" style="float:left;margin-top: -7.5px;margin-right: 10px;")
-                |Infinite File System
-
+        Navbar(home="true")
         .btn__container
-            .btn__wrap Upload Keyfile
-            .btn__wrap(@click="download(newKey())") Create New Keyfile
+            .btn__wrap Upload KeyPassport
+            .btn__wrap(@click="download(newKey())") Create New KeyPassport      
         
 </template>
 
 <script>
     import bsv from 'bsv'
+    import Navbar from './Navbar.vue'
 
     export default {
         name: 'Login',
+        components: {
+            Navbar
+        },
         mounted () {
             if (localStorage.getItem('private')) {
                 this.$router.push({path: '/home'})
@@ -41,32 +41,6 @@
 <style lang="sass">
     @import url('https://fonts.googleapis.com/css?family=Inconsolata')
 
-    body
-        background-color: #9f5afd
-
-    .header
-        font-family: Inconsolata
-        max-width: 800px
-        width: 80%
-        margin: auto
-        margin-top: 50px
-        color: #FFF
-        .logo
-            float: left
-            font-size: 16px
-        .upload__btn
-            float: left
-            font-family: Inconsolata
-            text-transform: uppercase
-            letter-spacing: 1px
-            font-size: 12px
-            cursor: pointer
-            border: 1px solid rgba(160, 20, 252, 1)
-            border-radius: 5px
-            padding: 10px
-            color: rgba(140, 20, 252, 1)
-            background-color: rgba(140, 20, 252, 0.1)
-            line-height: 20px
     .btn__container
         width: 100%
         text-align: center
@@ -76,10 +50,10 @@
 
         .btn__wrap
             font-family: Inconsolata
-            font-size: 12px
+            font-size: 14px
             display: inline-block
             color: #FFF
-            background-color: rgba(255,255,255,0.1)
+            background-color: rgba(0,0,0,0.5)
             border-radius: 2px
             padding: 20px
             margin: 5px

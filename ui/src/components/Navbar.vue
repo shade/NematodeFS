@@ -3,13 +3,21 @@
         .logo
             img(src="../assets/infinity.png" height="30px" style="float:left;margin-top: -5px;margin-right: 10px;")
             | Infinite File System
-        .amount ~45.4 actions left
-
-
+        .top__commands(:style="{display: (home ? 'none': 'block')}")
+            .amount ~45.4 actions left
+            .logout(@click="logout()") Logout
 </template>
 <script>
     export default {
-        name: 'Navbar'
+        name: 'Navbar',
+        props: ['home'],
+        methods: {
+            logout() {
+                delete localStorage.private
+                delete localStorage.public
+                this.$router.go()
+            }
+        }
     }
 </script>
 
@@ -38,10 +46,15 @@
             color: rgba(140, 20, 252, 1)
             background-color: rgba(140, 20, 252, 0.1)
             line-height: 20px
-        .amount
+        .top__commands
             float: right
-            font-size: 12px
-            cursor: pointer
-            margin-right: 20px
+            .amount
+                display: inline-block
+                font-size: 12px
+                cursor: pointer
+                margin-right: 20px
+            .logout
+                display: inline-block
+                cursor: pointer
 
 </style>
