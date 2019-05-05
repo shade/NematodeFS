@@ -49,3 +49,4 @@ export interface BSVKeyPair {
 
 export const NETWORK = 'testnet'
 export const ACTION_SATOSHI_AMOUNT = 550
+export const TRANSACTION_OVERHEAD = 32 + 65 + 73 + 4

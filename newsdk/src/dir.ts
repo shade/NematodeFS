@@ -36,6 +36,22 @@ export default class Dir extends Reader {
         this.parseEntries(data.slice(39))
     }
 
+    createDir () {
+
+    }
+
+    addDynEntry (ptr: string ) {
+
+    }
+
+    addStatEntry (ptr) {
+
+    }
+    
+    removeEntry (name) {
+        // Just refresh in case we missed something in that period of time
+        this.refresh()
+    }
 
     private parseEntries(data: Uint8Array) {
         for (var i = 0; i < this.iNode.record_count; i++) {

@@ -1,6 +1,6 @@
-import bitindex from 'bitindex-sdsk'
+import bitindex from 'bitindex-sdk'
 import { HDPrivateKey } from 'bsv'
-import { BSVKeyPair, NETWORK, ACTION_SATOSHI_AMOUNT } from "./types";
+import { BSVKeyPair, NETWORK, ACTION_SATOSHI_AMOUNT, TRANSACTION_OVERHEAD } from "./types";
 import Directory from "./dir"
 
 const BITCOM_ADDR = '1N2QZZrCs5HKS2SiPLMxyVtywSUfDKChmp'
@@ -15,7 +15,7 @@ export default class Nematode {
             this.root = this.genKey()
             this.balance = 0
         } else {
-            this.root = HDPrivateKey.fromJSON(key)
+            this.root = new HDPrivateKey(key)
             this.getBalance().then(this.updateBalance)
         }
     }
@@ -36,8 +36,10 @@ export default class Nematode {
         return new HDPrivateKey(NETWORK)
     }
 
-    private updateBalance (utxos: JSON) {
-
+    private updateBalance (utxos: any[]) {
+        utxos.reduce((prev: number, cur: any): number => {
+            return prev + cur.value - TRANSACTION_OVERHEAD
+        }, 0)
     }
 
     private async getBalance(): Promise<JSON> {
