@@ -66,6 +66,10 @@ export default class DirINode extends Reader implements IDirINode {
         this.child_count++
 
         this.serialize()
+        
+
+        // TODO: Create a tx with null data
+        // TODO: Broadcast data
     }
 
     addDynEntry (ptr: string ) {

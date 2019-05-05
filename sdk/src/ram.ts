@@ -1,7 +1,5 @@
 import request from 'request-promise'
-import BitIndexSDK from "bitindex-sdk";
 import btoa from 'btoa'
-console.log(btoa)
 let bitindex = new BitIndexSDK()
 
 let BITDB_URL = 'https://chronos.bitdb.network/q'
@@ -51,6 +49,22 @@ export default class RAM {
     
 
     static getUTXOs(address: string): Promise<any> {
-        return bitindex.address.getUTXOs(address)
+        let query = btoa(JSON.stringify({
+            "v": 3,
+            "q": {
+              "find": {
+                "out.e.a": address
+              },
+              "limit": 20
+            }
+          }))
+
+        let url = [
+            BITDB_URL,
+            BITDB_API_KEY,
+            query
+        ].join('/')
+
+        return request.get(url)
     }
 }
