@@ -4,26 +4,31 @@
             .logo
                 img(src="../assets/infinitywhite.png" height="30px" style="float:left;margin-top: -7.5px;margin-right: 10px;")
                 |Infinite File System
+
         .btn__container
-            .btn__wrap Upload Key
-            .btn__wrap(@click="download(newKey())") Create New Key
+            .btn__wrap Upload Keyfile
+            .btn__wrap(@click="download(newKey())") Create New Keyfile
         
 </template>
 
 <script>
+    import bsv from 'bsv'
+
     export default {
         name: 'Login',
 
         methods: {
             download (data) {
                 let str = JSON.stringify(data)
-                let link = document.createElement("a");
-                link.download = name;
+                let link = document.createElement("a")
+                link.download = name
                 link.href = `data:text/plain;charset=utf-8,${str}`
-                link.click();
+                link.click()
+                // TODO: redirect
             },
             newKey () {
-
+                const key = bsv.ECPair.makeRandom()
+                // TODO: create key
             }
         }
     }
