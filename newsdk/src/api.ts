@@ -7,6 +7,7 @@ import {
     TRANSACTION_OVERHEAD, 
     DirINode
     INematode } from "./types";
+
 import Directory from "./dir"
 import Dir from './dir';
 
@@ -14,18 +15,11 @@ const BITCOM_ADDR = '1N2QZZrCs5HKS2SiPLMxyVtywSUfDKChmp'
 const BITCOM_HASH = 'e69eb9be65f3120cf2150edf4c0ff4ecdfe67fe1'
 
 
-
-
-
-
 export default class Nematode implements INematode {
     rootKey: BSVKeyPair
     rootDir: DirINode
     balance: number
 
-    updateBalance(): Promise<number> {
-        // TODO: Update the balance for the rootKey
-    }
 
     getActions(): number {
         this.updateBalance()
@@ -38,6 +32,15 @@ export default class Nematode implements INematode {
     
     getRoot(): DirINode {
         return this.rootDir
+    }
+
+    async updateBalance(): Promise<number> {
+        let pubkey = this.rootKey.hdPublicKey.publicKey
+        let utxos = await RAM.getUTXOs(pubkey)
+
+        return utxos.reduce((prev, cur): number => {
+            return prev + cur.value - TRANSACTION_OVERHEAD
+        }, 0)
     }
 
     async getDirFromPath(path: string): Promise<DirINode> {
