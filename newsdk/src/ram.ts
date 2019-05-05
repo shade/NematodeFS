@@ -3,6 +3,10 @@ import BitIndexSDK from "bitindex-sdk";
 
 let bitindex = new BitIndexSDK()
 
+let BITDB_URL = 'https://chronos.bitdb.network/q'
+let BITDB_API_KEY = '1P6o45vqLdo6X8HRCZk8XuDsniURmXqiXo'
+
+
 export default class RAM {
     static getTx(hash: string): JSON {
         let url = [
