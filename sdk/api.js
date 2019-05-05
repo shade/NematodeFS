@@ -15,6 +15,17 @@ class FileSystem {
 
     mkdir (parent, name) {
         parentKey = _findDirKey(parent)
+        newDirKey = _deriveNewKey(parentKey)
+
+        // TODO: Add update parent index function
+    }
+
+    genKey () {
+
+    }
+
+    serveKey (key) {
+
     }
 
     _getBalance (key) {
@@ -25,5 +36,8 @@ class FileSystem {
 
     }
 
-
+    _deriveNewKey (key) {
+        // TODO: Fetch inode information
+        return key.derive(key)
+    }
 }
