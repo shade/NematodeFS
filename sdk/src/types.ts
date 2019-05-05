@@ -1,7 +1,7 @@
 
 export interface INematode {
     rootKey: BSVKeyPair
-    rootDir: DirINode
+    rootDir: IDirINode
     balance: number
 
     /**
@@ -14,15 +14,15 @@ export interface INematode {
     getKey(): BSVKeyPair
     
     /** Returns the inode associated with the root directory */
-    getRoot(): DirINode
+    getRoot(): IDirINode
 
     /**
      * Returns the inode associated with path, otherwise, null
      * @param path UNIX style path to fetch dir inode from
-     * @return {{Promise<DirINode>}}
+     * @return {{Promise<IDirINode>}}
      *  resolves to DirInode, or rejects with error message
      */
-    getDirFromPath(path: string): Promise<DirINode>
+    getDirFromPath(path: string): Promise<IDirINode>
 }
 
 export interface Dir {

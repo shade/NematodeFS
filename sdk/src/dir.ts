@@ -1,11 +1,16 @@
 import RAM from './ram'
-import { INode, DirINode, Dir, BSVKeyPair, NETWORK } from "./types";
+import { INode, IDirINode, Dir, BSVKeyPair, NETWORK } from "./types";
 import bsv from 'bsv'
 import Reader from './reader'
 
 export default class DirINode extends Reader implements IDirINode {
     key: BSVKeyPair
-    iNode: DirINode
+
+    mode: number
+    bitcom_id: Uint8Array
+    size: number
+    child_count: number
+    record_count: number
     dirs: Dir[]
 
     constructor (key: BSVKeyPair) {
@@ -28,13 +33,17 @@ export default class DirINode extends Reader implements IDirINode {
         let data = RAM.getLastTxData(addr)
 
 
-        this.iNode.mode = this.readInt(data, 2)
-        this.iNode.bitcom_id = data.slice(2, 22)
-        this.iNode.size = this.readInt(data.slice(23), 8)
-        this.iNode.child_count = this.readInt(data.slice(31), 4)
-        this.iNode.record_count = this.readInt(data.slice(35), 4)
+        this.mode = this.readInt(data, 2)
+        this.bitcom_id = data.slice(2, 22)
+        this.size = this.readInt(data.slice(23), 8)
+        this.child_count = this.readInt(data.slice(31), 4)
+        this.record_count = this.readInt(data.slice(35), 4)
         
         this.parseEntries(data.slice(39))
+    }
+
+    getSubDir(name: string): Promise<IDirINode> {
+        return new Promise<IDirINode>(() => {})
     }
 
     createDir () {
@@ -55,7 +64,7 @@ export default class DirINode extends Reader implements IDirINode {
     }
 
     private parseEntries(data: Uint8Array) {
-        for (var i = 0; i < this.iNode.record_count; i++) {
+        for (var i = 0; i < this.record_count; i++) {
             // TODO: parse Folder entry,
             // Push folder entry
         }

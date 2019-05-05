@@ -51,6 +51,6 @@ export default class RAM {
     
 
     static getUTXOs(address: string): Promise<any> {
-        return bitindex.address.getUTXOs(pubkey)
+        return bitindex.address.getUTXOs(address)
     }
 }

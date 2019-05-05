@@ -45,8 +45,8 @@ export default class Nematode implements INematode {
         }, 0)
     }
 
-    async getDirFromPath(path: string): Promise<DirINode> {
-        return new Promise<DirINode>(async (resolve, reject) => {
+    async getDirFromPath(path: string): Promise<IDirINode> {
+        return new Promise<IDirINode>(async (resolve, reject) => {
 
             if (path[0] != "/") {
                 reject("Invalid path supplied")
