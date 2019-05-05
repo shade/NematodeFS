@@ -4,7 +4,12 @@
         .btn__container
             .btn__wrap(@click="newHD") Create New Hard Drive    
             br
-            a.keyget__btn(download="HD_KEY_DONT_LOSE_THIS", :href="download_uri", @click="login()") Download Harddrive key
+            a.keyget__btn(
+                v-if="download_uri",
+                download="HD_KEY_DONT_LOSE_THIS",
+                :href="download_uri",
+                @click="login()"
+            ) Download Harddrive key and login
         .updates__container
             .updates__wrap
                 | Recently Added files
@@ -33,7 +38,7 @@
         },
         methods: {
             login() {
-                localStorage.private = this.hd.exportKey().privateKey
+                localStorage.private = JSON.stringify(this.hd.exportKey())
                 setTimeout(() => {
                     this.$router.go()
                 }, 1000)

@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  import Nematode from './../../../newsdk'
   import FileEntry from './FileEntry.vue'
   import Navbar from './Navbar.vue'
 
@@ -52,8 +53,13 @@
       }
     },
     data () {
-      // TODO: Fetch the folders local to this
-      // TODO: Show the folders
+      let hd = null
+      try {
+        hd = JSON.parse(localStorage.getItem('private'))
+      } catch (e) {
+        delete localStorage.private
+        this.router.go()
+      }
 
       return {
         msg: 'Welcome to Your Vue.js App'

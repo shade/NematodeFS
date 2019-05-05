@@ -8,21 +8,48 @@
             label(for="loginBtn").upload__btn Login
                 span(style="font-size: 10px") &nbsp;(load keyfile)
         .top__commands(v-else)
-            .amount ~45.4 actions left
+            .amount(v-if="hd") ~{{hd.getActions()}} actions left
             .logout(@click="logout()") Logout
 </template>
 <script>
+    import Nematode from '../../../newsdk/src/api';
+
     export default {
         name: 'Navbar',
         props: ['home'],
         methods: {
+            data () {
+                return {
+                    error: null,
+                    hd: 0
+                }
+            },
             logout() {
                 delete localStorage.private
-                delete localStorage.public
                 this.$router.go()
             },
             login (event) {
-                console.log(event.target.files)
+                const reader = new FileReader();
+
+                reader.addEventListener('loadend', (e) => {
+                    const text = e.srcElement.result;
+                    let keyfile = null
+
+                    try {
+                        keyfile = JSON.parse(text)
+                    } catch(e) {
+                        this.error = "Could not parse key file"
+                        return
+                    }
+
+                    if (!keyfile.privateKey) {
+                        this.error = "Invalid key file"
+                    }
+
+                    this.hd = new Nematode(keyfile)
+                });
+
+                reader.readAsText(event.target.files[0]);
             }
         }
     }
