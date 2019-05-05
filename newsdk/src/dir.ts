@@ -43,10 +43,14 @@ export class Dir {
         for (var i = 0; i < 4; i++) {
             this.iNode.record_count += data[23 + 8 + 4] << (8 * i)
         }
+        this.parseEntries(data.slice(23 + 16))
     }
 
 
-    private parseEntries() {
-        // this.iNode.dirs.push()   
+    private parseEntries(data: Uint8Array) {
+        for (var i = 0; i < this.iNode.record_count; i++) {
+            // TODO: parse Folder entry,
+            // Push folder entry
+        }
     }
 }
