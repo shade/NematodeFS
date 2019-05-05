@@ -33,6 +33,7 @@ interface INode {
     record_count: number,
 }
 
-interface DirINode implements INode {
+interface DirINode extends INode {
     dirs: Dir[]
 }
+

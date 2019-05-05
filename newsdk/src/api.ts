@@ -1,9 +1,25 @@
 
-// Basically, this exists to create the high level UI
+import bsv from 'bsv'
+
+
+const BITCOM_ADDR = '1N2QZZrCs5HKS2SiPLMxyVtywSUfDKChmp'
+const BITCOM_HASH = 'e69eb9be65f3120cf2150edf4c0ff4ecdfe67fe1'
+
+interface BSVKeyPair {
+    privateKey: object
+    hdPublicKey: {
+        publicKey: object
+    }
+
+    derive(child: number): BSVKeyPair
+}
 
 
 class FileSystem {
-    constructor (key) {
+    master: BSVKeyPair
+    freeBalance: number
+
+    constructor (key: BSVKeyPair) {
         if (!key) {
             this.master = this.genKey()
             this.serveKey(this.master)
@@ -18,19 +34,22 @@ class FileSystem {
 //        return mkdir(parent, name)
 //    } 
 
-    mkdir (parent, name) {
-        newDirKey = _deriveNewKey(parent)
+    mkdir (parent: BSVKeyPair, name: string) {
+        // TODO: Fetch inode information 
+        let newDirKey = parent.derive(0)
 
         // TODO: Add update parent index function
     }
 
-    fetchDir (dirkey) {
+/**
+
+    fetchDir (dirkey) NemaDir {
         // TODO: BitDB Query to fetch the actual directory
         // The actual directory is the last index created by dirkey
         address = new bsv.Address(dirkey.hdPublicKey, LIVENET)
     }
 
-    genKey () {
+    genKey () BSVKeyPair {
 
     }
 
@@ -45,9 +64,5 @@ class FileSystem {
     _findDirKey (name) {
 
     }
-
-    _deriveNewKey (key) {
-        // TODO: Fetch inode information
-        return key.derive(key)
-    }
+*/
 }
