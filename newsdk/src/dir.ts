@@ -3,7 +3,7 @@ import { INode, DirINode, BSVKeyPair, NETWORK } from "./types";
 import bsv from 'bsv'
 import Reader from './reader'
 
-export class Dir extends Reader {
+export default class Dir extends Reader {
     key: BSVKeyPair
     iNode: DirINode
 

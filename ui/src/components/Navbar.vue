@@ -3,7 +3,11 @@
         .logo
             img(src="../assets/infinity.png" height="30px" style="float:left;margin-top: -5px;margin-right: 10px;")
             | Infinite File System
-        .top__commands(:style="{display: (home ? 'none': 'block')}")
+        .top__commands(v-if="home")
+            input#loginBtn(type="file" value="Login" @change="login")
+            label(for="loginBtn").upload__btn Login
+                span(style="font-size: 10px") &nbsp;(load keyfile)
+        .top__commands(v-else)
             .amount ~45.4 actions left
             .logout(@click="logout()") Logout
 </template>
@@ -16,6 +20,9 @@
                 delete localStorage.private
                 delete localStorage.public
                 this.$router.go()
+            },
+            login (event) {
+                console.log(event.target.files)
             }
         }
     }
@@ -27,7 +34,7 @@
         font-family: Inconsolata
         max-width: 800px
         width: 80%
-        margin: 20px auto
+        margin: 40px auto
 
         .logo
             float: left
@@ -42,7 +49,7 @@
             cursor: pointer
             border: 1px solid rgba(160, 20, 252, 1)
             border-radius: 5px
-            padding: 10px
+            padding: 5px 20px
             color: rgba(140, 20, 252, 1)
             background-color: rgba(140, 20, 252, 0.1)
             line-height: 20px
@@ -56,5 +63,7 @@
             .logout
                 display: inline-block
                 cursor: pointer
+            #loginBtn
+                display: none
 
 </style>

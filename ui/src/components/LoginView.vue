@@ -2,8 +2,7 @@
     div
         Navbar(home="true")
         .btn__container
-            input.btn__wrap(type="file" value="Upload Key")
-            .btn__wrap(@click="download(newKey())") Create New Key      
+            .btn__wrap(@click="download(newKey())") Create New Hard Drive    
         .updates__container
             .updates__wrap
                 | Recently Added files
@@ -11,6 +10,7 @@
 </template>
 
 <script>
+    import Nematode from '../newsdk/api.js'
     import bsv from 'bsv'
     import Navbar from './Navbar.vue'
 
@@ -34,7 +34,7 @@
                 // TODO: redirect
             },
             newKey () {
-                const key = bsv.ECPair.makeRandom()
+                const hd = new Nematode()
                 // TODO: create key
             }
         }
