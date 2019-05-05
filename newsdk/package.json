@@ -7,6 +7,7 @@
   "author": "Joe",
   "license": "MIT",
   "dependencies": {
+    "bitindex-sdk": "^3.0.11",
     "bsv": "^0.26.5",
     "randombytes": "^2.1.0",
     "typescript": "^3.4.5"

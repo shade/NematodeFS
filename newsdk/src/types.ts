@@ -33,8 +33,6 @@ export interface INode {
     record_count: number,
 }
 
-export const NETWORK = 'testnet'
-
 export interface DirINode extends INode {
     dirs: Dir[]
 }
@@ -48,3 +46,6 @@ export interface BSVKeyPair {
     derive(child: number): BSVKeyPair
     toJSON(): JSON
 }
+
+export const NETWORK = 'testnet'
+export const ACTION_SATOSHI_AMOUNT = 550
