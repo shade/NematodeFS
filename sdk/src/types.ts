@@ -42,8 +42,12 @@ export interface IDirEntry {
 
     // 256 character name, max
     name: string
+    
+    // This the inode for the directory entry
+    inode: INode
 
     serialize(): Uint8Array
+    isDir(): boolean
 }
 
 export interface INode {

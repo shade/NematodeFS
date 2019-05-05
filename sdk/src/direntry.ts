@@ -1,5 +1,5 @@
 
-import {IDirEntry } from './types'
+import {IDirEntry, INode } from './types'
 import Reader from './reader';
 
 export default class DirEntry extends Reader implements IDirEntry {
@@ -10,6 +10,7 @@ export default class DirEntry extends Reader implements IDirEntry {
     child_pointer: number
     name_len: number
     name: string
+    inode: INode
 
     constructor (data: Uint8Array) {
         super()
@@ -23,5 +24,9 @@ export default class DirEntry extends Reader implements IDirEntry {
 
         // TODO: finish serialization function
         return new Uint8Array(arr)
+    }
+
+    isDir (): boolean {
+        return false
     }
 }

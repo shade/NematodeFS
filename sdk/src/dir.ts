@@ -48,7 +48,11 @@ export default class DirINode extends Reader implements IDirINode {
         return new Promise<IDirINode>((resolve, reject) => {
             this.dirs.forEach((dir: IDirEntry) => {
                 if (dir.name == name) {
-                    // TODO: Create the inode based on this.
+                    if (dir.isDir()) {
+                        resolve(dir.inode as IDirINode)
+                    } else {
+                        reject("Directory Not found!")
+                    }
                 }
             })
 
