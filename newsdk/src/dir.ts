@@ -33,7 +33,7 @@ export class Dir extends Reader {
         this.iNode.child_count = this.readInt(data.slice(31), 4)
         this.iNode.record_count = this.readInt(data.slice(35), 4)
         
-        this.parseEntries(data.slice(23 + 16))
+        this.parseEntries(data.slice(39))
     }
 
 
