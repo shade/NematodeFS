@@ -1,12 +1,14 @@
 import RAM from './ram'
 import { INode, DirINode, BSVKeyPair, NETWORK } from "./types";
 import bsv from 'bsv'
+import Reader from './reader'
 
-export class Dir {
+export class Dir extends Reader {
     key: BSVKeyPair
     iNode: DirINode
 
     constructor (key: BSVKeyPair) {
+        super()
         if (!key) {
             throw new Error("Cannot create dir without associated key!")
         }
@@ -25,24 +27,12 @@ export class Dir {
         let data = RAM.getLastTxData(addr)
 
 
-        this.iNode.mode = data[0] + (data[1] << 8)
+        this.iNode.mode = this.readInt(data, 2)
         this.iNode.bitcom_id = data.slice(2, 22)
-        this.iNode.size = 0
-
-        // Get the inode size
-        for (var i = 0; i < 8; i++) {
-            this.iNode.size += data[23 + i] << (8 * i)
-        }
-
-        // Update the child_count
-        for (var i = 0; i < 4; i++) {
-            this.iNode.child_count += data[23 + 8] << (8 * i)
-        }
-
-        // Update the record count
-        for (var i = 0; i < 4; i++) {
-            this.iNode.record_count += data[23 + 8 + 4] << (8 * i)
-        }
+        this.iNode.size = this.readInt(data.slice(23), 8)
+        this.iNode.child_count = this.readInt(data.slice(31), 4)
+        this.iNode.record_count = this.readInt(data.slice(35), 4)
+        
         this.parseEntries(data.slice(23 + 16))
     }
 
