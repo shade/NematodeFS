@@ -2,9 +2,12 @@
     div
         Navbar(home="true")
         .btn__container
-            .btn__wrap Upload KeyPassport
-            .btn__wrap(@click="download(newKey())") Create New KeyPassport      
-        
+            .btn__wrap Upload HardID
+            .btn__wrap(@click="download(newKey())") Create New HardID      
+        .updates__container
+            .updates__wrap
+                | Recently Added files
+
 </template>
 
 <script>
@@ -57,4 +60,18 @@
             border-radius: 2px
             padding: 20px
             margin: 5px
+    
+    .updates__container 
+        width: 100%
+        text-align: center
+        margin-top: 100px
+        float: left
+        cursor: pointer
+        .updates__wrap
+            margin: auto
+            width: 60%
+            max-width: 600px
+            font-family: Inconsolata
+            font-size: 12px
+            text-align: left
 </style>
