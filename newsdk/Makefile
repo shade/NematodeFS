@@ -1,3 +1,3 @@
 all:
 	yarn build
-	yarn run
+	yarn start
