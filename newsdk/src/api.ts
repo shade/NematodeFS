@@ -1,11 +1,11 @@
-import bsv from 'bsv'
+import { HDPrivateKey } from 'bsv'
 import { BSVKeyPair, NETWORK } from "./types";
 import Directory from "./dir"
 
 const BITCOM_ADDR = '1N2QZZrCs5HKS2SiPLMxyVtywSUfDKChmp'
 const BITCOM_HASH = 'e69eb9be65f3120cf2150edf4c0ff4ecdfe67fe1'
 
-class Nematode {
+export default class Nematode {
     root: BSVKeyPair
     balance: number
 
@@ -23,6 +23,6 @@ class Nematode {
     }
 
     private genKey(): BSVKeyPair {
-        return new bsv.HDPrivateKey(NETWORK)
+        return new HDPrivateKey(NETWORK)
     }
 }

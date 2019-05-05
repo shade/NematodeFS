@@ -2,7 +2,7 @@
     div
         Navbar(home="true")
         .btn__container
-            .btn__wrap(@click="download(newKey())") Create New Hard Drive    
+            .btn__wrap(@click="newHD") Create New Hard Drive    
         .updates__container
             .updates__wrap
                 | Recently Added files
@@ -10,8 +10,7 @@
 </template>
 
 <script>
-    import Nematode from '../newsdk/api.js'
-    import bsv from 'bsv'
+    import Nematode from './../../../newsdk'
     import Navbar from './Navbar.vue'
 
     export default {
@@ -33,8 +32,9 @@
                 link.click()
                 // TODO: redirect
             },
-            newKey () {
+            newHD () {
                 const hd = new Nematode()
+                console.log(hd)
                 // TODO: create key
             }
         }
