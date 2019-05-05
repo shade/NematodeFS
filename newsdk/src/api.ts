@@ -27,7 +27,7 @@ class Nematode {
 //        return mkdir(parent, name)
 //    } 
 
-    mkdir (parent: BSVKeyPair, name: string) {
+    mkdir (parent: BSVKeyPair, name: string): BSVKeyPair {
         // TODO: Fetch inode information 
         let newDirKey = parent.derive(0)
 
