@@ -18,14 +18,14 @@ export interface INematode {
 
     /**
      * Returns the inode associated with path, otherwise, null
-     * @param path UNIX style path to fetch dir inode from
+     * @param path UNIX style path to fetchDirEntry inode from
      * @return {{Promise<IDirINode>}}
      *  resolves to DirInode, or rejects with error message
      */
     getDirFromPath(path: string): Promise<IDirINode>
 }
 
-export interface Dir {
+export interface IDirEntry {
     // 2 byte number, the size of this entire directory entry
     record_size: number,
 
@@ -41,7 +41,9 @@ export interface Dir {
     name_len: number
 
     // 256 character name, max
-    name: Uint8Array[256]
+    name: string
+
+    serialize(): Uint8Array
 }
 
 export interface INode {
@@ -60,7 +62,7 @@ export interface INode {
 }
 
 export interface IDirINode extends INode {
-    dirs: Dir[]
+    dirs: IDirEntry[]
 
     getSubDir(name: string): Promise<IDirINode>
 }

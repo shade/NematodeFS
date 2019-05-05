@@ -10,7 +10,7 @@ import {
 
 import RAM from "./ram"
 import Directory from "./dir"
-import Dir from './dir';
+import DirEntry from './dir';
 
 const BITCOM_ADDR = '1N2QZZrCs5HKS2SiPLMxyVtywSUfDKChmp'
 const BITCOM_HASH = 'e69eb9be65f3120cf2150edf4c0ff4ecdfe67fe1'

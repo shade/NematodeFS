@@ -1,5 +1,5 @@
 import RAM from './ram'
-import { INode, IDirINode, Dir, BSVKeyPair, NETWORK } from "./types";
+import { INode, IDirINode, IDirEntry, BSVKeyPair, NETWORK } from "./types";
 import bsv from 'bsv'
 import Reader from './reader'
 
@@ -11,12 +11,12 @@ export default class DirINode extends Reader implements IDirINode {
     size: number
     child_count: number
     record_count: number
-    dirs: Dir[]
+    dirs: IDirEntry[]
 
     constructor (key: BSVKeyPair) {
         super()
         if (!key) {
-            throw new Error("Cannot create dir without associated key!")
+            throw new Error("Cannot createDirEntry without associated key!")
         }
 
         this.key = key
@@ -24,13 +24,13 @@ export default class DirINode extends Reader implements IDirINode {
     }
 
     /**
-     * Re-Fetches and parses the inode and data associated with this dir 
+     * Re-Fetches and parses the inode and data associated with thisDirEntry 
      */
-    refresh () {
+    async refresh () {
         let pubkey = this.key.hdPublicKey.publicKey
         let addr = new bsv.Address(pubkey, NETWORK, 'pubkey')
         
-        let data = RAM.getLastTxData(addr)
+        let data = await RAM.getLastTxData(addr)
 
 
         this.mode = this.readInt(data, 2)
@@ -42,12 +42,25 @@ export default class DirINode extends Reader implements IDirINode {
         this.parseEntries(data.slice(39))
     }
 
-    getSubDir(name: string): Promise<IDirINode> {
-        return new Promise<IDirINode>(() => {})
+    async getSubDir(name: string): Promise<IDirINode> {
+        await this.refresh()
+
+        return new Promise<IDirINode>((resolve, reject) => {
+            this.dirs.forEach((dir: IDirEntry) => {
+                if (dir.name == name) {
+                    // TODO: Create the inode based on this.
+                }
+            })
+
+            reject("Not found!")
+        })
     }
 
     createDir () {
+        this.refresh()
+        this.child_count++
 
+        this.serialize()
     }
 
     addDynEntry (ptr: string ) {
@@ -68,5 +81,20 @@ export default class DirINode extends Reader implements IDirINode {
             // TODO: parse Folder entry,
             // Push folder entry
         }
+    }
+
+    serialize (): Uint8Array {
+        // Convert the header to a byte string 
+        let arr = this.toArr(this.mode, 2)
+            .concat(Array.from(this.bitcom_id))
+            .concat(this.toArr(this.size, 8))
+            .concat(this.toArr(this.child_count, 4))
+            .concat(this.toArr(this.record_count, 4))
+        
+        this.dirs.forEach(dir => {
+            arr = arr.concat(Array.from(dir.serialize()))
+        })
+
+        return new Uint8Array(arr)
     }
 }

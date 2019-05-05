@@ -10,4 +10,15 @@ export default class Reader {
         }
         return value
     }
+
+    toArr (num: number, bytes: number): number[] {
+        let arr = []
+
+        for (var i = 0; i < bytes; i++) {
+            arr.push(num & 0xFF)
+            num >>= 8
+        }
+
+        return arr
+    }
 }
