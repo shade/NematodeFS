@@ -27,7 +27,7 @@ export interface INode {
     size: number,
     // A 4 byte number telling us how many children inodes have ever been created
     // Set to 0 for files
-    children_count: number,
+    child_count: number,
     // A 4 byte number telling us how many records this has, (only for directories)
     // Set to 0 for files
     record_count: number,

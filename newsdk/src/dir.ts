@@ -23,5 +23,16 @@ export class Dir {
         let addr = new bsv.Address(pubkey, NETWORK, 'pubkey')
         
         let data = RAM.getLastTxData(addr)
+
+
+        this.iNode.mode = data[0] + (data[1] << 8)
+        this.iNode.bitcom_id = data.slice(2, 22)
+        this.iNode.size = 0
+
+        // Update the inode size
+        for (var i = 0; i < 8; i++) {
+            this.iNode.size += data[23 + i] << (8 * i)
+        }
+
     }
 }
