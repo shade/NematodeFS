@@ -1,6 +1,6 @@
 
-import {IDirEntry, INode } from './types'
-import Reader from './reader';
+import {IDirEntry, INode } from '../types'
+import Reader from '../reader';
 
 export default class DirEntry extends Reader implements IDirEntry {
     record_size: number

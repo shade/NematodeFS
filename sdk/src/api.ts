@@ -9,8 +9,8 @@ import {
     INematode } from "./types";
 
 import RAM from "./ram"
-import Directory from "./dir"
-import DirEntry from './dir';
+import Directory from "./dir/dir"
+import DirEntry from './dir/direntry';
 
 const BITCOM_ADDR = '1N2QZZrCs5HKS2SiPLMxyVtywSUfDKChmp'
 const BITCOM_HASH = 'e69eb9be65f3120cf2150edf4c0ff4ecdfe67fe1'

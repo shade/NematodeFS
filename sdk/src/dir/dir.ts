@@ -1,7 +1,7 @@
-import RAM from './ram'
-import { INode, IDirINode, IDirEntry, BSVKeyPair, NETWORK } from "./types";
+import RAM from '../ram'
+import { INode, IDirINode, IDirEntry, BSVKeyPair, NETWORK } from "../types";
 import bsv from 'bsv'
-import Reader from './reader'
+import Reader from '../reader'
 
 export default class DirINode extends Reader implements IDirINode {
     key: BSVKeyPair
