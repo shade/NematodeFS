@@ -13,9 +13,14 @@ export default class Nematode {
         if (!key) {
             this.root = this.genKey()
             this.balance = 0
+        } else {
+            this.root = key
+            this.balance = this.getBalance()
         }
+    }
 
-        this.root = key
+    exportKey (): JSON {
+        return this.root.toJSON()
     }
 
     getKey (): BSVKeyPair {
@@ -24,5 +29,9 @@ export default class Nematode {
 
     private genKey(): BSVKeyPair {
         return new HDPrivateKey(NETWORK)
+    }
+
+    private getBalance(): number {
+        return 0
     }
 }

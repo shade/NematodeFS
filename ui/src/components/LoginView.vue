@@ -3,6 +3,8 @@
         Navbar(home="true")
         .btn__container
             .btn__wrap(@click="newHD") Create New Hard Drive    
+            br
+            a.keyget__btn(download="HD_KEY_DONT_LOSE_THIS", :href="download_uri", @click="login()") Download Harddrive key
         .updates__container
             .updates__wrap
                 | Recently Added files
@@ -18,24 +20,30 @@
         components: {
             Navbar
         },
+        data() {
+            return {
+                hd: null,
+                download_uri: null
+            }
+        },
         mounted () {
             if (localStorage.getItem('private')) {
                 this.$router.push({path: '/home'})
             }
         },
         methods: {
-            download (data) {
-                let str = JSON.stringify(data)
-                let link = document.createElement("a")
-                link.download = name
-                link.href = `data:text/plain;charset=utf-8,${str}`
-                link.click()
-                // TODO: redirect
+            login() {
+                localStorage.private = this.hd.exportKey().privateKey
+                setTimeout(() => {
+                    this.$router.go()
+                }, 1000)
             },
             newHD () {
                 const hd = new Nematode()
-                console.log(hd)
-                // TODO: create key
+                this.hd = hd
+
+                let keystr = JSON.stringify(hd.exportKey())
+                this.download_uri = `data:text/plain;charset=utf-8,${keystr}`
             }
         }
     }
@@ -64,6 +72,10 @@
             border-radius: 2px
             padding: 20px
             margin: 5px
+
+        a.keyget__btn
+            font-family: Inconsolata
+            font-size: 20px
     
     .updates__container 
         width: 100%

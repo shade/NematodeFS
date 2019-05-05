@@ -46,4 +46,5 @@ export interface BSVKeyPair {
     }
 
     derive(child: number): BSVKeyPair
+    toJSON(): JSON
 }
