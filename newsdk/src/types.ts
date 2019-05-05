@@ -7,8 +7,8 @@ export interface Dir {
     record_type: number,
 
     // Pointer to either a static resource, or another pubkey inode, or your own child
-    static_pointer: Uint8Array[32],
-    dynamic_pointer: Uint8Array[20],
+    static_pointer: Uint8Array,
+    dynamic_pointer: Uint8Array,
     child_pointer: number
 
     // 1 byte length for name
@@ -22,7 +22,7 @@ export interface INode {
     // Tells us if this is a directory, a normal file
     mode: number,
     // A 20 byte pubkeyhash related to the type 
-    bitcom_id: Uint8Array[20]
+    bitcom_id: Uint8Array
     // A 8 byte number telling us how large this file is
     size: number,
     // A 4 byte number telling us how many children inodes have ever been created

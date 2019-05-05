@@ -1,13 +1,13 @@
 
 import bsv from 'bsv'
 import { BSVKeyPair } from "./types";
-
+import Directory from "./dir"
 
 const BITCOM_ADDR = '1N2QZZrCs5HKS2SiPLMxyVtywSUfDKChmp'
 const BITCOM_HASH = 'e69eb9be65f3120cf2150edf4c0ff4ecdfe67fe1'
 
 class Nematode {
-    master: BSVKeyPair
+    root: BSVKeyPair
     freeBalance: number
 
     constructor (key: BSVKeyPair) {
@@ -28,7 +28,7 @@ class Nematode {
 //    } 
 
     mkdir (parent: BSVKeyPair, name: string): BSVKeyPair {
-        // TODO: Fetch inode information 
+        new Directory(parent)
         let newDirKey = parent.derive(0)
 
         // TODO: Add update parent index function
