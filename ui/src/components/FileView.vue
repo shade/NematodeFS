@@ -14,7 +14,26 @@
         FileEntry(name="cool.png")
         FileEntry(name="lulz.exe")
         FileEntry(name=".." type="folder")
-      div.
+      div.side__container
+        div.preview__img
+        table.preview__info
+          tr
+            td.info__header Name
+            td.info__data Coolmeme.jpg
+          tr
+            td.info__header Size
+            td.info__data 12.1 kB
+          tr
+            td.info__header Storage Format
+            td.info__data B (B:// protocol)
+          tr
+            td.info__header Creation Time
+            td.info__data Block 3405 (2 mins ago)
+          tr
+            td.info__header Encrypted?
+            td.info__data No
+        div.choice(style="font-family: Inconsolata; padding-top: 20px") DOWNLOAD | PREVIEW
+
 </template>
 
 <script>
@@ -83,5 +102,22 @@
       font-family: Courier
       font-size: 12px
       float: left
-
+  .side__container
+    float: right
+    text-align: center
+    .preview__img
+      margin: auto
+      height: 130px
+      width: 100px
+      background-color: #DDD
+      border-radius: 3px
+    .preview__info
+      font-family: Courier
+      font-size: 10px
+      margin-top: 40px
+      max-width: 180px
+      .info__header
+        font-weight: 800
+      td
+        padding-top: 10px
 </style>
