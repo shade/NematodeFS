@@ -60,13 +60,12 @@ export class DirINode extends Reader implements IDirINode, Serializable {
         return new Uint8Array(arr)
     }
 
-
     refresh () {
-
+        
     }
 
     getSubDir (name: string): Promise<IDirINode> {
-        return new Promise ((resolve, reject) => {
+        return new Promise (async (resolve, reject) => {
             await this.refresh()
             
             for (var i = 0; i < this.dirs.length; i++) {

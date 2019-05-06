@@ -35,14 +35,14 @@ export interface INematode {
 
 export interface IDirEntry {
     // 2 byte number, the size of this entire directory entry
-    record_size: number,
+    record_size: number
 
     // 1 byte number: the type of record, folder, file, dynamic, static
-    record_type: number,
+    record_type: number
 
     // Pointer to either a static resource, or another pubkey inode, or your own child
-    static_pointer: Uint8Array,
-    dynamic_pointer: Uint8Array,
+    static_pointer: Uint8Array
+    dynamic_pointer: Uint8Array
     child_pointer: number
 
     // 1 byte length for name
@@ -58,17 +58,20 @@ export interface IDirEntry {
 
 export interface INode {
     // Tells us if this is a directory, a normal file
-    mode: number,
+    mode: number
     // A 20 byte pubkeyhash related to the type 
     bitcom_id: Uint8Array
     // A 8 byte number telling us how large this file is
-    size: number,
+    size: number
     // A 4 byte number telling us how many children inodes have ever been created
     // Set to 0 for files
-    child_count: number,
+    child_count: number
     // A 4 byte number telling us how many records this has, (only for directories)
     // Set to 0 for files
-    record_count: number,
+    record_count: number
+
+    // Resyncs the inode with the blockchain
+    refresh()
 }
 
 export interface IDirINode extends INode {
