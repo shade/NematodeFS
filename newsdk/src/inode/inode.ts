@@ -1,5 +1,5 @@
 import { IDirINode, Serializable, BSVKeyPair, INode, NEMATODE_LOCAL_DIR } from "../types";
-import DirEntry from './direntry'
+import { makeDirEntry, makeNewEntry, DirEntry } from './direntry'
 import Reader from '../reader'
 
 export class DirINode extends Reader implements IDirINode, Serializable {
@@ -21,9 +21,9 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
         this.root = root
         this.key = key
-        // Fetch the null data associated with this pubkey
-        this.tx = []
-        this.deserialize(this.tx)
+        // TODO: Fetch the null data associated with this pubkey
+        this.tx = new Uint8Array(10)
+        this.deserialize(new Uint8Array(10))
         // If there is nothing here, that's alright too.
     }
     
@@ -39,7 +39,7 @@ export class DirINode extends Reader implements IDirINode, Serializable {
             let len = this.readInt(data, 2)
             let arr = data.slice(0, len)
 
-            this.dirs.push(new DirEntry(arr))
+            this.dirs.push(makeNewEntry(this, arr))
             data = data.slice(len)
         }
     }

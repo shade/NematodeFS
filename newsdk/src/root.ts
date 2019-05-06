@@ -1,6 +1,6 @@
 
 import { BSVKeyPair, IDirINode, ACTION_SATOSHI_AMOUNT, INematode } from './types'
-import DirINode from './inode'
+import { createINode } from './inode/inode'
 
 export class Nematode implements INematode {
     root: BSVKeyPair
@@ -17,7 +17,7 @@ export class Nematode implements INematode {
     }
 
     getRoot(): IDirINode {
-        return DirINode.createINode(this.root.deriveChild(2), this.root) as IDirINode
+        return createINode(this.root.deriveChild(2), this.root, "DIR") as IDirINode
     }
 
     async getDirFromPath(path: string): Promise<IDirINode> {

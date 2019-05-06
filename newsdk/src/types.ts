@@ -8,9 +8,7 @@ export const IS_FILE = (mode) => !IS_DIR(mode)
 
 
 export interface INematode {
-    rootKey: BSVKeyPair
-    rootDir: IDirINode
-    balance: number
+    root: BSVKeyPair
 
     /**
      * Returns the number of actions that can be made

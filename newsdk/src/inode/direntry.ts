@@ -114,20 +114,23 @@ export class DirEntry extends Reader implements IDirEntry, Serializable {
  * @param hash The hash associated to where the B:// file lives
  * @param inode The inode that points to this file
  */
-export function makeBEntry (name: string, hash: string, inode: INode) {
+export function makeBEntry (name: string, hash: string, inode: INode): DirEntry {
     let entry = new DirEntry(inode)
     entry.set('record_type', B_BITCOM_ID)
     entry.set('static_pointer', DirEntry.hex2bytes(hash))
     entry.set('name_len', name.length)
     entry.set('name', name)
+
+    return entry
 }
 
 
 export function makeDirEntry (name: string) {
-    
+    // TODO: Fill this in
 }
 
-export function makeNewEntry (inode: INode, data: Uint8Array) {
+export function makeNewEntry (inode: INode, data: Uint8Array): DirEntry {
     let entry = new DirEntry(inode)
     entry.deserialize(data)
+    return entry
 }
