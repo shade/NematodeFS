@@ -66,13 +66,12 @@ export default class DAL {
                             scriptPubKey: root.hdPublicKey.publicKey,
                             satoshi: out.e.v
                         }))
-                        let value = 
                     }
                 })
             })
 
             firstTx.change(addr)
-            firstTx.sign(root)
+            firstTx.sign(root.privateKey)
             let firstTxId = null
             try {
                 firstTxId = await this.broadcastStr(firstTx.serialize())
