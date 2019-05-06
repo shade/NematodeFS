@@ -1,0 +1,17 @@
+{
+  "name": "nematode-fuse",
+  "version": "0.0.1",
+  "description": "Nematode fuse bindings",
+  "main": "index.js",
+  "scripts": {
+    "start": "node cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joe",
+  "license": "MIT",
+  "dependencies": {
+    "fuse-bindings": "^2.11.2",
+    "qrcode-terminal": "^0.12.0",
+    "terminal-kit": "^1.28.0"
+  }
+}
