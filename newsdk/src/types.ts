@@ -16,7 +16,7 @@ export interface INematode {
      * Returns the number of actions that can be made
      * given the current key
      */
-    getActions(): number
+    getActions(): Promise<number>
 
     /** Return ths current BSV key for the root directory */
     getKey(): BSVKeyPair
@@ -83,7 +83,7 @@ export interface BSVKeyPair {
         publicKey: object
     }
 
-    derive(child: number): BSVKeyPair
+    deriveChild(child: number): BSVKeyPair
     toJSON(): JSON
 }
 
@@ -93,6 +93,10 @@ export interface Serializable {
     deserialize (data: Uint8Array)
 }
 
-export const NETWORK = 'testnet'
+// It's pretty cheap on mainnet so why bother with testnet?
+export const NETWORK = 'mainnet'
+
 export const ACTION_SATOSHI_AMOUNT = 550
 export const TRANSACTION_OVERHEAD = 32 + 65 + 73 + 4
+
+export const B_BITCOM_ID = "TODO: FIGURE THIS OUT" 

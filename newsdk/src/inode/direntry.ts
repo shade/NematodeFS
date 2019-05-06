@@ -4,7 +4,9 @@ import {
     Serializable,
     NEMATODE_LOCAL_DIR,
     NEMATODE_PUBLIC_DIR,
-    NEMATODE_STATIC_FILE
+    NEMATODE_STATIC_FILE,
+    INode,
+    B_BITCOM_ID
 } from "../types";
 
 import Reader from '../reader'
@@ -85,22 +87,43 @@ export class DirEntry extends Reader implements IDirEntry, Serializable {
     set(attribute: string, value: any) {
         this[attribute] = value
     }
+
+    static hex2bytes(hex: string): Uint8Array {
+        let arr = []
+        while (hex.length) {
+            let curByte = hex.substr(0,2)
+            arr.push(parseInt(curByte, 16))
+            hex = hex.substr(2)
+        }
+
+        return new Uint8Array(arr)
+    }
 }
 
 
 
 
-export function makeBEntry (name, hash, inode) {
+/**
+ * Creates a B:// file entry for a given inode
+ * 
+ * @param name The name you want to give the B:// file
+ * @param hash The hash associated to where the B:// file lives
+ * @param inode The inode that points to this file
+ */
+export function makeBEntry (name: string, hash: string, inode: INode) {
     let entry = new DirEntry(inode)
     entry.set('record_type', B_BITCOM_ID)
-    entry.set('')
+    entry.set('static_pointer', DirEntry.hex2bytes(hash))
+    entry.set('name_len', name.length)
+    entry.set('name', name)
 }
 
-export function makeDirEntry () {
+
+export function makeDirEntry (name: string) {
     
 }
 
-export function makeNewEntry (inode, data) {
+export function makeNewEntry (inode: INode, data: Uint8Array) {
     let entry = new DirEntry(inode)
     entry.deserialize(data)
 }
