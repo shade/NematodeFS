@@ -1,5 +1,5 @@
 import { expect } from "chai"; 
-import RAM from "../src/ram";
+import DAL from "../src/tx/dal";
 
 
 const TEST_PRIV_KEY = '5Jd7LMJwxKEYHAkBvxMmyBmJHQNj2nZxcQsGCfsf8zbSprhC8uE'
@@ -12,7 +12,7 @@ describe('getTx', function() {
   it('should reject if not found', async () => {
     let tx = null
     try {
-      tx = await RAM.getTx(INVALID_TX_HASH)
+      tx = await DAL.getTx(INVALID_TX_HASH)
     } catch (e) {
       expect(e).to.not.equal(null)
     }
@@ -22,7 +22,7 @@ describe('getTx', function() {
   it('should resolve if found', async () => {
     let tx = null
     try {
-      tx = await RAM.getTx(VALID_TX_HASH)
+      tx = await DAL.getTx(VALID_TX_HASH)
     } catch (e) {
       expect(e).to.equal(null)
     }
@@ -36,7 +36,7 @@ describe('getUTXOs', async () => {
   it('should reject if not found', async () => {
     let tx = null
     try {
-      tx = await RAM.getUTXOs(TEST_ADDR)
+      tx = await DAL.getAllUTXOs(TEST_ADDR)
     } catch (e) {
       expect(e).to.equal(null)
     }

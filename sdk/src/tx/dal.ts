@@ -1,11 +1,12 @@
-let request = require('request-promise')
-let btoa = require('btoa')
+// Data Access Layer
+import * as request from 'request-promise'
+import * as btoa from 'btoa'
 
-let BITDB_URL = 'https://chronos.bitdb.network/q'
-let BITDB_API_KEY = '1P6o45vqLdo6X8HRCZk8XuDsniURmXqiXo'
+let BITDB_URL = 'https://genesis.bitdb.network/q'
+let BITDB_API_KEY = '1FnauZ9aUH2Bex6JzdcV4eNX7oLSSEbxtN'
 let BITINDEX_API_KEY = '35JGWtfhEKn7N3oPHustAh4uuQEfyBXJBbx5gRYMicpvzXPatmpYcGQqrmBgw3M2oe'
 
-export default class RAM {
+export default class DAL {
     static getTx(hash: string): Promise<JSON> {
         let query = btoa(JSON.stringify({
             "v": 3,
@@ -20,7 +21,7 @@ export default class RAM {
         return this.sendBITDBRequest(query)
     }
 
-    static getLastTxData(address: string): Uint8Array {
+    static getLastTxData(address: string): Promise<JSON> {
         let query = btoa(JSON.stringify({
             "v": 3,
             "q": {
@@ -35,7 +36,7 @@ export default class RAM {
     }
     
 
-    static getUTXOs(address: string): Promise<any> {
+    static getAllUTXOs(address: string): Promise<any> {
         let query = btoa(JSON.stringify({
             "v": 3,
             "q": {
@@ -65,10 +66,12 @@ export default class RAM {
                     },
                     json: true
                 })
-                if (tx.t.length == 0) {
+
+                let txs = tx.u.concat(tx.c)
+                if (txs.length == 0) {
                     reject("Not found")
                 } else {
-                    resolve(tx.t)
+                    resolve(txs)
                 }
             } catch (e) {
                 reject(e)   
