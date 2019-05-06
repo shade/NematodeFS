@@ -127,7 +127,7 @@ export default class DAL {
             BITDB_API_KEY,
             query
         ].join('/')
-        console.log(url)
+
         return new Promise<any>(async (resolve, reject) => {
             try {
                 let tx = await request({
