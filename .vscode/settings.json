@@ -2,7 +2,6 @@
     "files.exclude": {
         // exclude .js and .js.map files, when in a TypeScript project
         "node_modules/": true,
-        "**/*.js": { "when": "$(basename).ts"},
         "**/*.js.map": true,
     }
 }

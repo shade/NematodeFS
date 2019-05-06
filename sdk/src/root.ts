@@ -2,6 +2,7 @@
 import { BSVKeyPair, IDirINode, ACTION_SATOSHI_AMOUNT, INematode, NETWORK } from './types'
 import { createINode } from './inode/inode'
 import { Address, HDPrivateKey } from 'bsv'
+import DAL from './tx/dal'
 
 export class Nematode implements INematode {
     root: BSVKeyPair
@@ -69,6 +70,20 @@ export class Nematode implements INematode {
     }
     private async getBalance(): Promise<number> {
         // TODO: Fill this in
-        return new Promise<number>((resolve, reject) => {resolve(0)})
+        return new Promise<number>(async (resolve, reject) => {
+            let address = new Address(this.root.hdPublicKey.publicKey, NETWORK).toString()
+            let txs = await DAL.getAllUTXOs(address)
+            let value = 0
+
+            txs.forEach(tx => {
+                tx.out.forEach(out => {
+                    if (out.e.a == address) {
+                        value += out.e.v
+                    }
+                })
+            })
+
+            resolve(value)
+        })
     }
 }
