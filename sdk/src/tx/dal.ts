@@ -2,7 +2,7 @@
 import * as request from 'request-promise'
 import * as btoa from 'btoa'
 
-import { IDal, BSVKeyPair } from '../types'
+import { IDal, BSVKeyPair, NETWORK } from '../types'
 import bsv from 'bsv'
 
 let BITDB_URL = 'https://genesis.bitdb.network/q'
@@ -14,18 +14,68 @@ export default class DAL {
 
     static update(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            let tx = new bsv.Transaction()
+            let addr = new bsv.Address(inodeKey.hdPublicKey.publicKey, NETWORK)
+            let rootAddr = new bsv.Address(root.hdPublicKey.publicKey, NETWORK)
+            let newTx = new bsv.Transaction()
+            let utxos = await RAM.getUTXOs(addr)
+            // Add in all the inputs
+            utxos.forEach(tx => {
+                tx.out.forEach((out, i) => {
+                    if (out.e.a == addr) {
+                        count++
+                        newTx.addInput(new bsv.Transaction.UnspentOutput({
+                            txid: tx.h,
+                            vout: i,
+                            addr: addr,
+                            scriptPubKey: pubkey,
+                            satoshi: out.e.v
+                        }))
+                        value += out.e.v
+                    }
+                })
+            })
 
+            // Add an output
+            newTx.to(addr, 546)
+            // Add in the data
+            newTx.addData(data)
+            // Add in the change
+            newTx.change(rootAddr)
+            // Sign everything!
+            newTx.sign(inodeKey, root)
+
+            // Serialize and broadcast
+            this.broadcastStr(newTx.serialize())
         })
     }
 
     static create(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
-        return new Promise<boolean>((resolve, reject) => {
+        return new Promise<boolean>(async (resolve, reject) => {
+            let addr = new bsv.Address(inodeKey.hdPublicKey.publicKey, NETWORK)
+            let rootAddr = new bsv.Address(root.hdPublicKey.publicKey, NETWORK)
 
             // First transaction is a many to 1, via the root key
-            Transaction
-            // Second transaction is a 1 to 3, returning change to the root key
+            let firstTx = new bsv.Transaction()
+            firstTx.from(rootAddr)
+            firstTx.to(addr)
+            firstTx.sign(root)
+            let firstTxId = null
+            try {
+                firstTxId = await this.broadcastStr(firstTx.serialize())
+            } catch (e) {
+                reject(e)
+            }
 
+            // Second transaction is a 1 to 3, returning change to the root key
+            let secondTx = new bsv.Transaction()
+            secondTx.addInput(new bsv.Transaction.UnspentOutput({
+                txid: firstTxId,
+                vout: 0,
+                addr: addr,
+                scriptPubKey: inodeKey.hdPublicKey.publicKey,
+                // This is a bit hacky... I guess this is a hackathon
+                satoshi: firstTx._getOutputAmount()
+            }))
         })
     }
 
