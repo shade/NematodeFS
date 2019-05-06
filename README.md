@@ -20,3 +20,5 @@ The basic design concept of this entire thing is to take inodes and treat them l
 The FUSE bindings help create a layer of abstraction that allows developers and users to mount a virtual "folder" that can be accessed and used by programs and people in a manner that is completely virtual.
 
 The UI is a simple webapp that links to the Nematode SDK, unfortunately I didn't have time to finish its implementation.
+
+Lastly, one of the biggest elements to this entire thing is the element of time. Not only is this a file system that can store everything forever, it can store every interaction forever i.e. imagine this as if you're taking continous snapshots of your harddrive and permanently storing them.
