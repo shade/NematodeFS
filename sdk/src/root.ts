@@ -1,9 +1,18 @@
 
-import { BSVKeyPair, IDirINode, ACTION_SATOSHI_AMOUNT, INematode } from './types'
+import { BSVKeyPair, IDirINode, ACTION_SATOSHI_AMOUNT, INematode, NETWORK } from './types'
 import { createINode } from './inode/inode'
+import { Address, HDPrivateKey } from 'bsv'
 
 export class Nematode implements INematode {
     root: BSVKeyPair
+    
+    constructor (key: BSVKeyPair) {
+        if (!key) {
+            this.root = this.genKey()
+        }
+
+        this.root = key
+    }
 
     async getActions(): Promise<number> {
         return new Promise<number>( async (resolve, reject) => {
@@ -12,8 +21,12 @@ export class Nematode implements INematode {
         })
     }
 
+    getRootAddress(): string {
+        return new Address(this.root.hdPublicKey.publicKey, NETWORK)
+    }
+
     getKey(): BSVKeyPair {
-        return this.root.deriveChild(2)
+        return this.root
     }
 
     getRoot(): IDirINode {
@@ -49,6 +62,9 @@ export class Nematode implements INematode {
 
 
 
+    private genKey(): BSVKeyPair {
+        return new HDPrivateKey(NETWORK)
+    }
     private async getBalance(): Promise<number> {
         // TODO: Fill this in
         return new Promise<number>((resolve, reject) => {})

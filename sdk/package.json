@@ -2,7 +2,7 @@
   "name": "NematodeSDK",
   "version": "0.0.1",
   "description": "The NematodeWORM file system SDK",
-  "main": "src/api.js",
+  "main": "src/root.js",
   "repository": "https://github.com/github.com/nematode",
   "author": "Joe",
   "license": "MIT",
