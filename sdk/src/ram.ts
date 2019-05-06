@@ -1,13 +1,12 @@
 import request from 'request-promise'
 import btoa from 'btoa'
-let bitindex = new BitIndexSDK()
 
 let BITDB_URL = 'https://chronos.bitdb.network/q'
 let BITDB_API_KEY = '1P6o45vqLdo6X8HRCZk8XuDsniURmXqiXo'
 
 
 export default class RAM {
-    static getTx(hash: string): JSON {
+    static getTx(hash: string): Promise<JSON> {
         let query = btoa(JSON.stringify({
             "v": 3,
             "q": {
