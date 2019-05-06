@@ -45,7 +45,19 @@ export class DirINode extends Reader implements IDirINode, Serializable {
     }
 
     serialize (): Uint8Array {
-                
+
+        // Convert the header to a byte string 
+        let arr = this.toArr(this.mode, 2)
+            .concat(Array.from(this.bitcom_id))
+            .concat(this.toArr(this.size, 8))
+            .concat(this.toArr(this.child_count, 4))
+            .concat(this.toArr(this.record_count, 4))
+        
+        this.dirs.forEach(dir => {
+            arr = arr.concat(Array.from(dir.serialize()))
+        })
+
+        return new Uint8Array(arr)
     }
 }
 
