@@ -60,8 +60,20 @@ export class DirINode extends Reader implements IDirINode, Serializable {
         return new Uint8Array(arr)
     }
 
-    refresh () {
-        
+    refresh (): Promise<any> {
+        // TODO: Fetch data from the blockchain
+        return new Promise((resolve, reject) => {
+            let data = new Uint8Array(10)
+            this.deserialize(data)
+        })
+    }
+
+    getAllSubDir (): Promise<string[]> {
+        return new Promise(async (resolve, reject) => {
+            await this.refresh()
+            // Map out all the subdirectory stuff
+            resolve(this.dirs.map(dir => dir.getName()))
+        })
     }
 
     getSubDir (name: string): Promise<IDirINode> {
