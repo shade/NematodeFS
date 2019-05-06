@@ -1,7 +1,8 @@
 import { IDirINode, Serializable, BSVKeyPair, INode } from "../types";
 import DirEntry from './direntry'
+import Reader from '../reader'
 
-export class DirINode implements IDirINode, Serializable {
+export class DirINode extends Reader implements IDirINode, Serializable {
     root: BSVKeyPair
     key: BSVKeyPair
     
@@ -16,16 +17,17 @@ export class DirINode implements IDirINode, Serializable {
     dirs: DirEntry[]
 
     constructor (key: BSVKeyPair, root: BSVKeyPair) {
+        super()
+
         this.root = root
-        this.key = pubkey
+        this.key = key
         // Fetch the null data associated with this pubkey
         this.tx = []
         this.deserialize(this.tx)
         // If there is nothing here, that's alright too.
     }
-
-
-    serialize () {
+    
+    deserialize (data: Uint8Array) {
         this.mode = this.readInt(data, 2)
         this.bitcom_id = data.slice(2, 22)
         this.size = this.readInt(data.slice(23), 8)
@@ -40,6 +42,10 @@ export class DirINode implements IDirINode, Serializable {
             this.dirs.push(new DirEntry(arr))
             data = data.slice(len)
         }
+    }
+
+    serialize (): Uint8Array {
+                
     }
 }
 
