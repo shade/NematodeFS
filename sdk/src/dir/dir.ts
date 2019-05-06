@@ -7,7 +7,7 @@ import Tx from '../tx/build'
 
 export default class DirINode extends Reader implements IDirINode {
     key: BSVKeyPair
-
+    tx: object
     mode: number
     bitcom_id: Uint8Array
     size: number
@@ -25,15 +25,14 @@ export default class DirINode extends Reader implements IDirINode {
         this.refresh()
     }
 
-    /**
-     * Re-Fetches and parses the inode and data associated with thisDirEntry 
-     */
     async refresh () {
         let pubkey = this.key.hdPublicKey.publicKey
         let addr = new bsv.Address(pubkey, NETWORK, 'pubkey')
         
-        let data = await RAM.getLastTxData(addr)
-
+        let tx = await RAM.getLastTxData(addr)
+        
+        // The output will be #1
+        let data = tx[0].out[1].ls2
 
         this.mode = this.readInt(data, 2)
         this.bitcom_id = data.slice(2, 22)
@@ -65,6 +64,7 @@ export default class DirINode extends Reader implements IDirINode {
     createDir () {
         this.refresh()
         this.child_count++
+        // TODO: Create entry add here
         this.update()
     }
 
@@ -84,7 +84,7 @@ export default class DirINode extends Reader implements IDirINode {
     private update () {
         let data = this.serialize()
         // TODO: Construct appropriate nulldata transactions and publish them
-        // Tx.sendToNullData(this.key.hdPublicKey.publicKey, this.serialize())
+        // Ouptut #0 is the one we're using
     }
 
     private parseEntries(data: Uint8Array) {

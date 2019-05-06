@@ -4,14 +4,14 @@ import { Transaction, Script } from 'bsv'
 export default class TxMaker {
     constructor () {}
 
-    async getFreshOutput (addr: string, pubkey: string): Promise<boolean> {
+    async SendToData (addr: string, pubkey: string, data: string): Promise<boolean> {
         // Create the base transaction
         // get the UTXO to spend
         let utxos = await RAM.getUTXOs(addr)
         let count = 0
+        let value = 0
 
         var newTx = new Transaction()
-
         // Add in all the inputs
         utxos.forEach(tx => {
             tx.out.forEach((out, i) => {
@@ -24,12 +24,18 @@ export default class TxMaker {
                         scriptPubKey: pubkey,
                         satoshi: out.e.v
                     }))
+                    value += out.e.v
                 }
             })
         })
 
         // Add an output
-        newTx.to(addr)
+        newTx.to(addr, 546)
+        // Add in the data
+        newTx.addData(data)
+        // Add in the change
+        newTx.change(addr)
+
 
         // Attempt to publish this transaction
         return new Promise<boolean>((resolve, reject) => {
@@ -38,13 +44,13 @@ export default class TxMaker {
             }
 
             // Serialize, send to the destination.
-
-            resolve(true)
+            try {
+                RAM.broadcastStr(newTx.serialize())
+                resolve(true)
+            } catch (e) {
+                reject(e)
+            }
         })
 
-    }
-
-    sendToNullData (pubkey: string, data: string) {
-        
     }
 }
