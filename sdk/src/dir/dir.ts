@@ -69,6 +69,7 @@ export default class DirINode extends Reader implements IDirINode {
         
 
         // TODO: Create a tx with null data
+        tx.link()
         // TODO: Broadcast data
     }
 

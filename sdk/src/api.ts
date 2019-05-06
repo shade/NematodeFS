@@ -16,6 +16,7 @@ const BITCOM_ADDR = '1N2QZZrCs5HKS2SiPLMxyVtywSUfDKChmp'
 const BITCOM_HASH = 'e69eb9be65f3120cf2150edf4c0ff4ecdfe67fe1'
 
 
+
 export default class Nematode implements INematode {
     rootKey: BSVKeyPair
     rootDir: IDirINode

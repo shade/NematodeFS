@@ -68,11 +68,7 @@ export default class RAM {
                 if (tx.t.length == 0) {
                     reject("Not found")
                 } else {
-                    if (tx.t.length == 1) { 
-                        resolve(tx.t[0])
-                    } else {
-                        resolve(tx.t)
-                    }
+                    resolve(tx.t)
                 }
             } catch (e) {
                 reject(e)   
