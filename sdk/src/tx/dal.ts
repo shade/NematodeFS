@@ -3,7 +3,7 @@ import * as request from 'request-promise'
 import * as btoa from 'btoa'
 
 import { IDal, BSVKeyPair, NETWORK } from '../types'
-import bsv from 'bsv'
+import * as bsv from 'bsv'
 
 let BITDB_URL = 'https://genesis.bitdb.network/q'
 let BITDB_API_KEY = '1FnauZ9aUH2Bex6JzdcV4eNX7oLSSEbxtN'
@@ -54,8 +54,24 @@ export default class DAL {
 
             // First transaction is a many to 1, via the root key
             let firstTx = new bsv.Transaction()
-            firstTx.from(rootAddr)
-            firstTx.to(addr)
+            let utxos = await DAL.getAllUTXOs(rootAddr)
+            // Add in all the inputs
+            utxos.forEach(tx => {
+                tx.out.forEach((out, i) => {
+                    if (out.e.a == root) {
+                        firstTx.addInput(new bsv.Transaction.UnspentOutput({
+                            txid: tx.h,
+                            vout: i,
+                            addr: rootAddr,
+                            scriptPubKey: root.hdPublicKey.publicKey,
+                            satoshi: out.e.v
+                        }))
+                        let value = 
+                    }
+                })
+            })
+
+            firstTx.change(addr)
             firstTx.sign(root)
             let firstTxId = null
             try {

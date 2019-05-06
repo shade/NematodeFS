@@ -26,6 +26,9 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
         this.root = root
         this.key = key
+
+        this.child_count = 0
+        this.record_count = 0
         this.dirs = []
     }
     
@@ -56,8 +59,13 @@ export class DirINode extends Reader implements IDirINode, Serializable {
     }
 
     serialize (): Uint8Array {
+        if (!this.tx) {
+            this.mode = 0
+            this.size = 0
+            this.bitcom_id = new Uint8Array(20)
+        }
 
-        // Convert the header to a byte string 
+        // Convert the header to a byte string
         let arr = this.toArr(this.mode, 2)
             .concat(Array.from(this.bitcom_id))
             .concat(this.toArr(this.size, 8))
@@ -146,7 +154,9 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
 
     addDir (name: string) {
-        this.dirs.push(makeDirEntry(this, name))
+        this.dirs.push(makeDirEntry(this, this.toArr(this.child_count, 4), name))
+        this.child_count++
+        this.publish()
     }
 
     addFile () {
@@ -163,7 +173,6 @@ export class DirINode extends Reader implements IDirINode, Serializable {
                 dir.updateName(newname)
             }
         }
-
 
         if (AUTO_PUBLISH) {
             this.publish()

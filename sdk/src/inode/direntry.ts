@@ -123,16 +123,17 @@ export function makeBEntry (inode: INode, name: string, hash: string): DirEntry 
     let entry = new DirEntry(inode)
     entry.set('record_type', B_BITCOM_ID)
     entry.set('static_pointer', DirEntry.hex2bytes(hash))
-    entry.set('name_len', name.length)
-    entry.set('name', name)
-
+    entry.updateName(name)
     return entry
 }
 
 
-export function makeDirEntry (inode: INode, name: string): DirEntry {
-    // TODO: Fill this in
-    return null
+export function makeDirEntry (inode: INode, child: number[], name: string): DirEntry {
+    let entry = new DirEntry(inode)
+    entry.set('record_type', NEMATODE_LOCAL_DIR)
+    entry.set('child_pointer', child)
+    entry.updateName(name)
+    return entry
 }
 
 export function makeNewEntry (inode: INode, data: Uint8Array): DirEntry {
