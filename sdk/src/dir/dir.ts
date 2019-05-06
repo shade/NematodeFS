@@ -65,8 +65,7 @@ export default class DirINode extends Reader implements IDirINode {
     createDir () {
         this.refresh()
         this.child_count++
-
-        Tx.sendToNullData(this.key.hdPublicKey.publicKey, this.serialize())
+        this.update()
     }
 
     addDynEntry (ptr: string ) {
@@ -80,6 +79,12 @@ export default class DirINode extends Reader implements IDirINode {
     removeEntry (name) {
         // Just refresh in case we missed something in that period of time
         this.refresh()
+    }
+
+    private update () {
+        let data = this.serialize()
+        // TODO: Construct appropriate nulldata transactions and publish them
+        // Tx.sendToNullData(this.key.hdPublicKey.publicKey, this.serialize())
     }
 
     private parseEntries(data: Uint8Array) {
