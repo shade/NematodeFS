@@ -1,6 +1,11 @@
-import { IDirINode, Serializable, BSVKeyPair, INode, NEMATODE_LOCAL_DIR } from "../types";
+import { IDirINode, Serializable, BSVKeyPair, INode, NEMATODE_LOCAL_DIR, NETWORK, ACTION_SATOSHI_AMOUNT } from "../types";
 import { makeDirEntry, makeNewEntry, DirEntry } from './direntry'
+import { Address } from 'bsv'
+
 import Reader from '../reader'
+import DAL from "../tx/dal";
+
+const AUTO_PUBLISH = true
 
 export class DirINode extends Reader implements IDirINode, Serializable {
     root: BSVKeyPair
@@ -21,10 +26,8 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
         this.root = root
         this.key = key
-        // TODO: Fetch the null data associated with this pubkey
-        this.tx = new Uint8Array(10)
-        this.deserialize(new Uint8Array(10))
-        // If there is nothing here, that's alright too.
+
+        this.refresh()
     }
     
     deserialize (data: Uint8Array) {
@@ -63,7 +66,7 @@ export class DirINode extends Reader implements IDirINode, Serializable {
     refresh (): Promise<any> {
         // TODO: Fetch data from the blockchain
         return new Promise((resolve, reject) => {
-            let data = new Uint8Array(10)
+            let data = 
             this.deserialize(data)
         })
     }
@@ -98,6 +101,48 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
             reject("Could not find entry :(")
         })
+    }
+
+    getPublishingCost ():number {
+        return this.serialize().length / ACTION_SATOSHI_AMOUNT
+    }
+
+    // Very expensive operation, should only be called after one, or many operations
+    publish () {
+        let data = this.serialize()
+
+        // Update or create
+        if (this.tx == null) {
+            DAL.create(this.key, this.root, data)
+        } else {
+            DAL.update(this.key, this.root, data)
+        }
+    }
+
+
+    addDir (name: string) {
+        this.dirs.push(makeDirEntry(this, name))
+    }
+
+    addFile () {
+
+    }
+
+    renameEntry (oldname: string, newname:string) {
+        // Find the entry by name
+        for (var i = 0; i < this.dirs.length; i++) {
+            let dir = this.dirs[i]
+
+            // update the name
+            if (dir.getName() === oldname) {
+                dir.updateName(newname)
+            }
+        }
+
+
+        if (AUTO_PUBLISH) {
+            this.publish()
+        }
     }
 }
 

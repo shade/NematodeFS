@@ -3,24 +3,24 @@ import * as request from 'request-promise'
 import * as btoa from 'btoa'
 
 import { IDal } from '../types'
+import bsv from 'bsv'
 
 let BITDB_URL = 'https://genesis.bitdb.network/q'
 let BITDB_API_KEY = '1FnauZ9aUH2Bex6JzdcV4eNX7oLSSEbxtN'
 let BITINDEX_API_KEY = '35JGWtfhEKn7N3oPHustAh4uuQEfyBXJBbx5gRYMicpvzXPatmpYcGQqrmBgw3M2oe'
 
-export default class DAL implements IDal {
+// This should be a singleton but ignore, pretend it implements IDal
+export default class DAL {
 
-
-    update(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
+    static update(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            // Collect all the UTXOs for this address
-            
+            let tx = new bsv.Transaction
+
         })
     }
 
-    create(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
+    static create(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            
         })
     }
 

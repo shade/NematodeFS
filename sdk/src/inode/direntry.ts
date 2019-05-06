@@ -83,6 +83,11 @@ export class DirEntry extends Reader implements IDirEntry, Serializable {
 
         this.name = String.fromCharCode(...data.slice(0, this.name_len))
     }
+
+    updateName (newname: string) {
+        this.name_len = newname.length
+        this.name = newname
+    }
     
     getName ():string {
         return this.name
@@ -114,7 +119,7 @@ export class DirEntry extends Reader implements IDirEntry, Serializable {
  * @param hash The hash associated to where the B:// file lives
  * @param inode The inode that points to this file
  */
-export function makeBEntry (name: string, hash: string, inode: INode): DirEntry {
+export function makeBEntry (inode: INode, name: string, hash: string): DirEntry {
     let entry = new DirEntry(inode)
     entry.set('record_type', B_BITCOM_ID)
     entry.set('static_pointer', DirEntry.hex2bytes(hash))
@@ -125,8 +130,9 @@ export function makeBEntry (name: string, hash: string, inode: INode): DirEntry 
 }
 
 
-export function makeDirEntry (name: string) {
+export function makeDirEntry (inode: INode, name: string): DirEntry {
     // TODO: Fill this in
+    return null
 }
 
 export function makeNewEntry (inode: INode, data: Uint8Array): DirEntry {

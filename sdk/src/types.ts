@@ -9,6 +9,18 @@ export const IS_FILE = (mode) => !IS_DIR(mode)
 
 
 
+
+export interface BSVKeyPair {
+    privateKey: object
+    hdPublicKey: {
+        publicKey: object
+    }
+
+    deriveChild(child: number): BSVKeyPair
+    toJSON(): JSON
+}
+
+
 export interface IDal {
     /**
      * Assembles all the UTXOs that are connected to this inode and spits out a brand
@@ -105,16 +117,6 @@ export interface IDirINode extends INode {
     dirs: IDirEntry[]
 
     getSubDir(name: string): Promise<IDirINode>
-}
-
-export interface BSVKeyPair {
-    privateKey: object
-    hdPublicKey: {
-        publicKey: object
-    }
-
-    deriveChild(child: number): BSVKeyPair
-    toJSON(): JSON
 }
 
 
