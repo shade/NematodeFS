@@ -92,6 +92,7 @@ export class DirINode extends Reader implements IDirINode, Serializable {
                 await this.refresh()
             } catch (e) {
                 reject("Couldn't get it")
+                return
             }
 
             // Map out all the subdirectory stuff
