@@ -42,6 +42,12 @@ export class Nematode implements INematode {
 
             if (path[0] != "/") {
                 reject("Invalid path supplied")
+                return
+            }
+
+            if (path == "/") {
+                resolve(this.getRoot())
+                return
             }
 
             let pieces = path.split('/')
@@ -69,7 +75,6 @@ export class Nematode implements INematode {
         return new HDPrivateKey(NETWORK)
     }
     private async getBalance(): Promise<number> {
-        // TODO: Fill this in
         return new Promise<number>(async (resolve, reject) => {
             let address = new Address(this.root.hdPublicKey.publicKey, NETWORK).toString()
             let txs = await DAL.getAllUTXOs(address)

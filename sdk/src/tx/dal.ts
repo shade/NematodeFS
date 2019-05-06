@@ -93,6 +93,7 @@ export default class DAL {
     }
 
     static getLastTxData(address: string): Promise<JSON> {
+        console.log(address)
         let query = btoa(JSON.stringify({
             "v": 3,
             "q": {

@@ -26,8 +26,7 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
         this.root = root
         this.key = key
-
-        this.refresh()
+        this.dirs = []
     }
     
     private string2array (data: string): Uint8Array {
@@ -74,16 +73,27 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
     refresh (): Promise<any> {
         return new Promise(async (resolve, reject) => {
-            let tx = await DAL.getLastTxData(new Address(this.key.hdPublicKey.publicKey, NETWORK).toString())
-            this.tx = tx[0]
-            let data = this.string2array(tx[0].out[1].ls2)
-            this.deserialize(data)
+            try {
+                let tx = await DAL.getLastTxData(new Address(this.key.hdPublicKey.publicKey, NETWORK).toString())
+                this.tx = tx[0]
+                let data = this.string2array(tx[0].out[1].ls2)
+                this.deserialize(data)
+                resolve()
+            } catch (e) {
+                reject("Refreshing inode did not work")
+            }
+            
         })
     }
 
     getAllSubDir (): Promise<string[]> {
         return new Promise(async (resolve, reject) => {
-            await this.refresh()
+            try {
+                await this.refresh()
+            } catch (e) {
+                reject("Couldn't get it")
+            }
+
             // Map out all the subdirectory stuff
             resolve(this.dirs.map(dir => dir.getName()))
         })
@@ -91,8 +101,12 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
     getSubDir (name: string): Promise<IDirINode> {
         return new Promise (async (resolve, reject) => {
-            await this.refresh()
-            
+            try {
+                await this.refresh()
+            } catch (e) {
+                reject("Couldn't get it")
+            }
+
             for (var i = 0; i < this.dirs.length; i++) {
                 let dir = this.dirs[i]
                 
