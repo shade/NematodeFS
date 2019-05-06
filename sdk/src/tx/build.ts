@@ -44,7 +44,7 @@ export default class TxMaker {
 
     }
 
-    sendToNullData (data: string) {
-
+    sendToNullData (pubkey: string, data: string) {
+        
     }
 }

@@ -66,7 +66,7 @@ export default class DirINode extends Reader implements IDirINode {
         this.refresh()
         this.child_count++
 
-        Tx.sendToNullData(this.serialize())
+        Tx.sendToNullData(this.key.hdPublicKey.publicKey, this.serialize())
     }
 
     addDynEntry (ptr: string ) {
