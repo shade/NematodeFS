@@ -14,8 +14,8 @@ export default class DAL {
 
     static update(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
         return new Promise<boolean>(async (resolve, reject) => {
-            let addr = new bsv.Address(inodeKey.hdPublicKey.publicKey, NETWORK)
-            let rootAddr = new bsv.Address(root.hdPublicKey.publicKey, NETWORK)
+            let addr = new bsv.Address(inodeKey.hdPublicKey.publicKey, NETWORK).toString()
+            let rootAddr = new bsv.Address(root.hdPublicKey.publicKey, NETWORK).toString()
             let newTx = new bsv.Transaction()
             let utxos = await DAL.getAllUTXOs(addr)
             // Add in all the inputs
@@ -49,8 +49,8 @@ export default class DAL {
 
     static create(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
         return new Promise<boolean>(async (resolve, reject) => {
-            let addr = new bsv.Address(inodeKey.hdPublicKey.publicKey, NETWORK)
-            let rootAddr = new bsv.Address(root.hdPublicKey.publicKey, NETWORK)
+            let addr = new bsv.Address(inodeKey.hdPublicKey.publicKey, NETWORK).toString()
+            let rootAddr = new bsv.Address(root.hdPublicKey.publicKey, NETWORK).toString()
 
             // First transaction is a many to 1, via the root key
             let firstTx = new bsv.Transaction()

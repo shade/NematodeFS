@@ -74,7 +74,7 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
     refresh (): Promise<any> {
         return new Promise(async (resolve, reject) => {
-            let tx = await DAL.getLastTxData(new Address(this.key.hdPublicKey.publicKey, NETWORK))
+            let tx = await DAL.getLastTxData(new Address(this.key.hdPublicKey.publicKey, NETWORK).toString())
             this.tx = tx[0]
             let data = this.string2array(tx[0].out[1].ls2)
             this.deserialize(data)

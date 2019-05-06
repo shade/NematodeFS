@@ -24,7 +24,7 @@ export class Nematode implements INematode {
     }
 
     getRootAddress(): string {
-        return new Address(this.root.hdPublicKey.publicKey, NETWORK, 'pubkeyhash')
+        return new Address(this.root.hdPublicKey.publicKey, NETWORK, 'pubkeyhash').toString()
     }
 
     getKey(): BSVKeyPair {
