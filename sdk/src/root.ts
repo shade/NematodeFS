@@ -6,14 +6,14 @@ import { Address, HDPrivateKey } from 'bsv'
 export class Nematode implements INematode {
     root: BSVKeyPair
     
-    constructor (key: BSVKeyPair) {
+    constructor (key: any) {
         if (!key) {
             this.root = this.genKey()
             console.log(this.root)
             return 
         }
 
-        this.root = key
+        this.root = new HDPrivateKey(key)
     }
 
     async getActions(): Promise<number> {
@@ -69,6 +69,6 @@ export class Nematode implements INematode {
     }
     private async getBalance(): Promise<number> {
         // TODO: Fill this in
-        return new Promise<number>((resolve, reject) => {})
+        return new Promise<number>((resolve, reject) => {resolve(0)})
     }
 }

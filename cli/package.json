@@ -10,8 +10,10 @@
   "author": "Joe",
   "license": "MIT",
   "dependencies": {
+    "bsv": "^0.26.5",
     "fuse-bindings": "^2.11.2",
     "qrcode-terminal": "^0.12.0",
-    "terminal-kit": "^1.28.0"
+    "terminal-kit": "^1.28.0",
+    "whoop": "^0.0.2"
   }
 }

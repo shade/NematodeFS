@@ -1,2 +1,2 @@
 all:
-	yarn start
+	node test.js
