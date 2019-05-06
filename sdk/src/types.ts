@@ -1,3 +1,4 @@
+import { create } from "domain";
 
 export const NEMATODE_LOCAL_DIR = 0x1
 export const NEMATODE_PUBLIC_DIR = 0x2
@@ -6,6 +7,34 @@ export const NEMATODE_STATIC_FILE = 0x3
 export const IS_DIR = (mode) => ((mode & 0b11) != 0b11)
 export const IS_FILE = (mode) => !IS_DIR(mode)
 
+
+
+export interface IDal {
+    /**
+     * Assembles all the UTXOs that are connected to this inode and spits out a brand
+     * new inode. Will use UTXOs from root, change goes to root as well. 
+     * Inode transactions have 3 outputs
+     *  Output 0 - the update output (this is spent when we update)
+     *  Output 1 - the actual data
+     *  Output 2 - the change address (root key)
+     * 
+     * 
+     * @param inodeKey the key to the inode that needs updating
+     * @param data The new data to update the inode with
+     */
+    update(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<object>
+
+    /**
+     * Creates a brand new inode with data, uses a many-1 transaction, then spends that
+     * with a many - 3 transaction.
+     * 
+     * 
+     * @param inodeKey the inode key we're sending data to
+     * @param data The data to be sent to
+     * @param root The root key, where money is to be sent to.
+     */
+    create(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<object>
+}
 
 export interface INematode {
     root: BSVKeyPair

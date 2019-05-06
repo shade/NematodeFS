@@ -2,11 +2,29 @@
 import * as request from 'request-promise'
 import * as btoa from 'btoa'
 
+import { IDal } from '../types'
+
 let BITDB_URL = 'https://genesis.bitdb.network/q'
 let BITDB_API_KEY = '1FnauZ9aUH2Bex6JzdcV4eNX7oLSSEbxtN'
 let BITINDEX_API_KEY = '35JGWtfhEKn7N3oPHustAh4uuQEfyBXJBbx5gRYMicpvzXPatmpYcGQqrmBgw3M2oe'
 
-export default class DAL {
+export default class DAL implements IDal {
+
+
+    update(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            // Collect all the UTXOs for this address
+            
+        })
+    }
+
+    create(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
+        return new Promise<boolean>((resolve, reject) => {
+            
+        })
+    }
+
+
     static getTx(hash: string): Promise<JSON> {
         let query = btoa(JSON.stringify({
             "v": 3,
