@@ -13,7 +13,7 @@ There are a couple parts to this project:
 - FUSE Bindings
 - The UI (not finished)
 
-The Nematode SDK serves as the core of the entire project, in itself it is comprised of 2 major components: entries, and inodes. Similar to the structure of other ext2 file systems these inodes only contain links to and some file metadata. That being said, the entries contain names and stuff. More detail will be added in the accompanying documentation. 
+The Nematode SDK serves as the core of the entire project, in itself it is comprised of 2 major components: entries, and inodes. Similar to the structure of other ext2 file systems these inodes only contain links to and some file metadata. This allows for the creation of a directory hierarchy which inturn is what creates the file system. More detail on the actual design of this will be added in the accompanying documentation. 
 
 The basic design concept of this entire thing is to take inodes and treat them like mini files which can be stored onchain. This allows for a design where one can essentially replicate their entire harddrive on the blockchain itself. However, they do not need to store all that information locally rather, they can use a small key or keypair to access it.
 
