@@ -62,7 +62,7 @@ export default class Nematode implements INematode {
                 try {
                     curdir = await curdir.getSubDir(dirname)
                 } catch (e) {
-                    reject(e)   
+                    reject(e)
                 }
             }
 
