@@ -13,24 +13,22 @@ let BITINDEX_API_KEY = '35JGWtfhEKn7N3oPHustAh4uuQEfyBXJBbx5gRYMicpvzXPatmpYcGQq
 export default class DAL {
 
     static update(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
-        return new Promise<boolean>((resolve, reject) => {
+        return new Promise<boolean>(async (resolve, reject) => {
             let addr = new bsv.Address(inodeKey.hdPublicKey.publicKey, NETWORK)
             let rootAddr = new bsv.Address(root.hdPublicKey.publicKey, NETWORK)
             let newTx = new bsv.Transaction()
-            let utxos = await RAM.getUTXOs(addr)
+            let utxos = await DAL.getAllUTXOs(addr)
             // Add in all the inputs
             utxos.forEach(tx => {
                 tx.out.forEach((out, i) => {
                     if (out.e.a == addr) {
-                        count++
                         newTx.addInput(new bsv.Transaction.UnspentOutput({
                             txid: tx.h,
                             vout: i,
                             addr: addr,
-                            scriptPubKey: pubkey,
+                            scriptPubKey: inodeKey.hdPublicKey.publicKey,
                             satoshi: out.e.v
                         }))
-                        value += out.e.v
                     }
                 })
             })

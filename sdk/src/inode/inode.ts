@@ -30,6 +30,15 @@ export class DirINode extends Reader implements IDirINode, Serializable {
         this.refresh()
     }
     
+    private string2array (data: string): Uint8Array {
+        let nums = []
+        for (var i = 0; i < data.length; i++) {
+            nums.push(data.charCodeAt(i))
+        }
+
+        return new Uint8Array(nums)
+    }
+
     deserialize (data: Uint8Array) {
         this.mode = this.readInt(data, 2)
         this.bitcom_id = data.slice(2, 22)
@@ -64,9 +73,10 @@ export class DirINode extends Reader implements IDirINode, Serializable {
     }
 
     refresh (): Promise<any> {
-        // TODO: Fetch data from the blockchain
         return new Promise(async (resolve, reject) => {
-            let data = await DAL.getLastTxData(new Address(this.key.hdPublicKey.publicKey, NETWORK))
+            let tx = await DAL.getLastTxData(new Address(this.key.hdPublicKey.publicKey, NETWORK))
+            this.tx = tx[0]
+            let data = this.string2array(tx[0].out[1].ls2)
             this.deserialize(data)
         })
     }
