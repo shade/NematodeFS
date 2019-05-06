@@ -2,7 +2,7 @@
 import * as request from 'request-promise'
 import * as btoa from 'btoa'
 
-import { IDal } from '../types'
+import { IDal, BSVKeyPair } from '../types'
 import bsv from 'bsv'
 
 let BITDB_URL = 'https://genesis.bitdb.network/q'
@@ -14,13 +14,18 @@ export default class DAL {
 
     static update(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            let tx = new bsv.Transaction
+            let tx = new bsv.Transaction()
 
         })
     }
 
     static create(inodeKey: BSVKeyPair, root: BSVKeyPair, data: string): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
+
+            // First transaction is a many to 1, via the root key
+            Transaction
+            // Second transaction is a 1 to 3, returning change to the root key
+
         })
     }
 

@@ -109,7 +109,7 @@ export class DirINode extends Reader implements IDirINode, Serializable {
 
     // Very expensive operation, should only be called after one, or many operations
     publish () {
-        let data = this.serialize()
+        let data = this.serialize().toString()
 
         // Update or create
         if (this.tx == null) {
@@ -125,7 +125,7 @@ export class DirINode extends Reader implements IDirINode, Serializable {
     }
 
     addFile () {
-
+        // TODO: Fill this in
     }
 
     renameEntry (oldname: string, newname:string) {
