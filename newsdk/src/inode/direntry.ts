@@ -83,6 +83,10 @@ export class DirEntry extends Reader implements IDirEntry, Serializable {
 
         this.name = String.fromCharCode(...data.slice(0, this.name_len))
     }
+    
+    getName ():string {
+        return this.name
+    }
 
     set(attribute: string, value: any) {
         this[attribute] = value

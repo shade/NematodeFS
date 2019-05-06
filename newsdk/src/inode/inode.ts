@@ -1,4 +1,4 @@
-import { IDirINode, Serializable, BSVKeyPair, INode } from "../types";
+import { IDirINode, Serializable, BSVKeyPair, INode, NEMATODE_LOCAL_DIR } from "../types";
 import DirEntry from './direntry'
 import Reader from '../reader'
 
@@ -58,6 +58,35 @@ export class DirINode extends Reader implements IDirINode, Serializable {
         })
 
         return new Uint8Array(arr)
+    }
+
+
+    refresh () {
+
+    }
+
+    getSubDir (name: string): Promise<IDirINode> {
+        return new Promise ((resolve, reject) => {
+            await this.refresh()
+            
+            for (var i = 0; i < this.dirs.length; i++) {
+                let dir = this.dirs[i]
+                
+                if (dir.getName() === name) {
+                    // Create new INode with this pubkey
+                    if (dir.record_type === NEMATODE_LOCAL_DIR) {
+                        let subkey = this.key.deriveChild(dir.child_pointer)
+                        resolve(createINode(subkey, this.root, "DIR") as DirINode)
+                        return
+                    } else {
+                        reject("Invalid entry type, may be unmodifiable")
+                        // TODO: Add public allowable editable entries
+                    }
+                }
+            }
+
+            reject("Could not find entry :(")
+        })
     }
 }
 
