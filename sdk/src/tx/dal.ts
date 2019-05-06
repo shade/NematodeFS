@@ -58,17 +58,18 @@ export default class DAL {
             // Add in all the inputs
             utxos.forEach(tx => {
                 tx.out.forEach((out, i) => {
-                    if (out.e.a == root) {
-                        firstTx.addInput(new bsv.Transaction.UnspentOutput({
-                            txid: tx.h,
+                    if (out.e.a == rootAddr) {
+                        firstTx.addInput(new bsv.Transaction.Input({
+                            txid: tx.tx.h,
                             vout: i,
                             addr: rootAddr,
                             scriptPubKey: root.hdPublicKey.publicKey,
                             satoshi: out.e.v
-                        }))
+                        }),out.h2,out.e.v)
                     }
                 })
             })
+            console.log(firstTx.inputs)
 
             firstTx.change(addr)
             firstTx.sign(root.privateKey)
@@ -79,9 +80,11 @@ export default class DAL {
                 reject(e)
             }
 
+            console.log(firstTxId)
+
             // Second transaction is a 1 to 3, returning change to the root key
             let secondTx = new bsv.Transaction()
-            secondTx.addInput(new bsv.Transaction.UnspentOutput({
+            secondTx.addInput(new bsv.Transaction.Input({
                 txid: firstTxId,
                 vout: 0,
                 addr: addr,
