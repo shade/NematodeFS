@@ -9,6 +9,8 @@ export class Nematode implements INematode {
     constructor (key: BSVKeyPair) {
         if (!key) {
             this.root = this.genKey()
+            console.log(this.root)
+            return 
         }
 
         this.root = key
@@ -22,7 +24,7 @@ export class Nematode implements INematode {
     }
 
     getRootAddress(): string {
-        return new Address(this.root.hdPublicKey.publicKey, NETWORK)
+        return new Address(this.root.hdPublicKey.publicKey, NETWORK, 'pubkeyhash')
     }
 
     getKey(): BSVKeyPair {
