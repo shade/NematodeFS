@@ -3,6 +3,7 @@ import { INode, IDirINode, IDirEntry, BSVKeyPair, NETWORK } from "../types";
 import bsv from 'bsv'
 import Reader from '../reader'
 import DirEntry from './direntry';
+import Tx from '../tx/build'
 
 export default class DirINode extends Reader implements IDirINode {
     key: BSVKeyPair
@@ -65,12 +66,7 @@ export default class DirINode extends Reader implements IDirINode {
         this.refresh()
         this.child_count++
 
-        this.serialize()
-        
-
-        // TODO: Create a tx with null data
-        tx.link()
-        // TODO: Broadcast data
+        Tx.sendToNullData(this.serialize())
     }
 
     addDynEntry (ptr: string ) {
