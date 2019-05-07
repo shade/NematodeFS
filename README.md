@@ -4,7 +4,7 @@
 roundWORM File system
 
   
-  
+* Note: check out NematodeIntro.pdf for a more high level intro * 
 
 Nematode is a ext2 style block file system for BSV.
 
